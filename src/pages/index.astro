@@ -1,17 +1,194 @@
 ---
+// ============================================
+// PÁGINA DE INICIO (HOME)
+// URL: / (la raíz del sitio)
+// Posicionamiento: estrategia humana + inteligencia artificial.
+// Usa el Layout base y mete dentro las 7 secciones.
+// ============================================
 
+import Layout from '../layouts/Layout.astro';
+import EstrellasHero from '../components/EstrellasHero.astro';
+
+// SEO de ESTA página. Keywords nuevas: marketing + inteligencia artificial.
+const pageTitle = "Agencia de marketing con inteligencia artificial";
+const pageDescription = "Combinamos estrategia humana e inteligencia artificial para crear contenido, campañas y webs que hacen crecer negocios. Más rápido, sin perder el criterio.";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title={pageTitle} description={pageDescription}>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 1 — HERO                                       -->
+  <!-- Una sola idea clara + 2 botones. El <h1> es el título  -->
+  <!-- más importante para Google: solo uno por página.       -->
+  <!-- ====================================================== -->
+  <section class="hero">
+    <!-- Campo de estrellas 3D, detrás del texto -->
+    <EstrellasHero />
+
+    <!-- Coordenadas reales de la estrella Atria (detalle de marca) -->
+    <div class="hero-coordenadas" aria-hidden="true">
+      <span class="coord-nombre">Atria · α Trianguli Australis</span>
+      <span>AR 16h 48m 39.9s</span>
+      <span>DEC −69° 01′ 39.5″</span>
+    </div>
+
+    <!-- Velo oscuro para que el texto se lea sobre las estrellas -->
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <!-- Contenido del hero, por delante de las estrellas -->
+    <div class="hero-contenido">
+      <h1>Combinamos estrategia humana e inteligencia artificial</h1>
+      <p>
+        Unimos creatividad humana y la potencia de la inteligencia artificial
+        para crear contenido, campañas y experiencias que mueven negocios.
+        Más rápido, sin perder el criterio.
+      </p>
+      <div class="hero-botones">
+        <a href="/contacto" class="boton boton-primario">Hablemos</a>
+        <a href="/servicios" class="boton boton-secundario">Ver servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 2 — DIFERENCIADORES                            -->
+  <!-- Los tres puntos que os separan, con el ángulo IA.      -->
+  <!-- ====================================================== -->
+  <section class="diferenciadores">
+    <div class="diferenciador">
+      <h2>Humano + máquina</h2>
+      <p>
+        La estrategia y la historia las pone una persona; la velocidad y la
+        escala, la inteligencia artificial. Lo mejor de los dos mundos.
+      </p>
+    </div>
+    <div class="diferenciador">
+      <h2>Más, y más rápido</h2>
+      <p>
+        Producimos video, imagen y contenido a un ritmo que una agencia
+        tradicional no alcanza.
+      </p>
+    </div>
+    <div class="diferenciador">
+      <h2>Resultados, no humo</h2>
+      <p>
+        La IA es la herramienta, no la excusa. Medimos lo que importa:
+        clientes, ventas, crecimiento.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 3 — SERVICIOS (vista previa)                   -->
+  <!-- Cuatro tarjetas que enlazan a la página de servicios.  -->
+  <!-- ====================================================== -->
+  <section class="servicios-preview">
+    <h2>Lo que hacemos</h2>
+    <div class="servicios-grid">
+      <div class="servicio-tarjeta">
+        <h3>Contenido con IA</h3>
+        <p>Video, imagen y piezas creativas generadas y refinadas con inteligencia artificial.</p>
+      </div>
+      <div class="servicio-tarjeta">
+        <h3>Estrategia y storytelling</h3>
+        <p>La capa humana: la idea, el mensaje y el porqué detrás de cada pieza.</p>
+      </div>
+      <div class="servicio-tarjeta">
+        <h3>Paid media</h3>
+        <p>Campañas en Meta y Google que llegan a quien de verdad te va a comprar.</p>
+      </div>
+      <div class="servicio-tarjeta">
+        <h3>Desarrollo web con IA</h3>
+        <p>Sitios rápidos, optimizados y a medida. Como este.</p>
+      </div>
+    </div>
+    <a href="/servicios" class="boton boton-primario">Conoce nuestros servicios</a>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 4 — PROCESO                                    -->
+  <!-- Los 4 pasos. El 03 ahora es producción con IA.         -->
+  <!-- ====================================================== -->
+  <section class="proceso">
+    <h2>Cómo trabajamos</h2>
+    <ol class="proceso-pasos">
+      <li>
+        <h3>01 · Escuchamos</h3>
+        <p>Entendemos tu negocio, tu cliente y a dónde quieres llegar.</p>
+      </li>
+      <li>
+        <h3>02 · Estrategia</h3>
+        <p>Diseñamos un plan a medida. Nada de plantillas.</p>
+      </li>
+      <li>
+        <h3>03 · Producción con IA</h3>
+        <p>Creamos a escala: video, imagen, copy y campañas, refinados con criterio humano.</p>
+      </li>
+      <li>
+        <h3>04 · Resultados</h3>
+        <p>Medimos lo que importa y ajustamos. Crecer no es suerte, es método.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 5 — PRUEBA SOCIAL                              -->
+  <!-- El caso real de Pispiretas, con el puente hacia la IA. -->
+  <!-- ====================================================== -->
+  <section class="prueba-social">
+    <h2>Resultados reales</h2>
+    <div class="caso">
+      <p class="caso-texto">
+        Academia Pispiretas (Medellín) nos confió su captación de alumnas.
+        Con contenido, pauta en Meta Ads y optimización de Google Business,
+        <strong>duplicamos sus matrículas semanales —de 6 a 12 alumnas—
+        alcanzando cerca de 50 inscripciones al mes.</strong> Hoy aplicamos
+        ese mismo método, potenciado con inteligencia artificial: producimos
+        más, y más rápido.
+      </p>
+      <p class="caso-apoyo">
+        En redes, una de las cuentas que gestionamos superó las 130.000
+        visualizaciones en un mes, con el 77% del alcance en público nuevo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 6 — MANIFIESTO (teaser)                        -->
+  <!-- Anzuelo corto que lleva a la página Nosotros.          -->
+  <!-- ====================================================== -->
+  <section class="manifiesto-teaser">
+    <p>
+      Nacimos con una idea incómoda: que se puede construir conexión real
+      en un entorno diseñado para fragmentar la atención. No elegimos entre
+      lo que se piensa y lo que se siente. Elegimos lo que es verdad para
+      cada marca.
+    </p>
+    <a href="/nosotros" class="boton boton-secundario">Nuestra historia</a>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECCIÓN 7 — CTA FINAL                                  -->
+  <!-- ====================================================== -->
+  <section class="cta-final">
+    <h2>¿Hablamos de tu negocio?</h2>
+    <p>Cuéntanos a dónde quieres llegar. Te decimos cómo.</p>
+    <a href="/contacto" class="boton boton-primario">Hablemos</a>
+  </section>
+
+</Layout>
+
+<script>
+  // LUZ QUE SIGUE AL CURSOR sobre las tarjetas de cristal.
+  // Guarda la posición del ratón en variables CSS (--mx, --my)
+  // que la hoja de estilos usa para pintar un brillo radial.
+  // Es CSS puro: ligero y sin WebGL. En móvil (sin ratón) no actúa.
+  const tarjetas = document.querySelectorAll('.servicio-tarjeta, .caso');
+  tarjetas.forEach((el) => {
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+</script>

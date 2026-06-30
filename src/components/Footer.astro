@@ -1,0 +1,62 @@
+---
+// ============================================
+// FOOTER — pie de página
+// Aparece abajo en TODAS las páginas (lo mete el Layout).
+// Contiene: navegación, contacto, redes y enlaces legales.
+// Los enlaces legales (aviso, privacidad, cookies) son
+// OBLIGATORIOS en España. Las páginas se crean más adelante.
+// ============================================
+
+// Año actual, calculado solo (para el "© 2026" que se actualiza cada año).
+const anio = new Date().getFullYear();
+
+// Email de contacto. PENDIENTE: cambiar a un correo del dominio
+// (hola@theatrialab.com) cuando esté creado, en vez del Gmail.
+const email = "theatrialab@gmail.com";
+---
+
+<footer class="pie">
+  <div class="pie-contenido">
+
+    <!-- Columna 1: marca + frase corta -->
+    <div class="pie-marca">
+      <a href="/" class="logo">Atria Lab</a>
+      <p>Marketing con método para negocios de belleza.</p>
+    </div>
+
+    <!-- Columna 2: navegación -->
+    <nav class="pie-nav">
+      <h3>Navegación</h3>
+      <ul>
+        <li><a href="/">Inicio</a></li>
+        <li><a href="/servicios">Servicios</a></li>
+        <li><a href="/nosotros">Nosotros</a></li>
+        <li><a href="/contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <!-- Columna 3: contacto + redes -->
+    <div class="pie-contacto">
+      <h3>Contacto</h3>
+      <a href={`mailto:${email}`}>{email}</a>
+
+      <!-- REDES SOCIALES — pendiente de URLs reales.
+           Cuando me des el Instagram, sustituimos el # por la URL. -->
+      <ul class="pie-redes">
+        <li><a href="#" aria-label="Instagram de Atria Lab">Instagram</a></li>
+        <!-- Añadir aquí LinkedIn, TikTok, etc. si los hay -->
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Línea inferior: copyright + enlaces legales (obligatorios en España) -->
+  <div class="pie-legal">
+    <p>© {anio} Atria Lab. Todos los derechos reservados.</p>
+    <ul>
+      <li><a href="/aviso-legal">Aviso legal</a></li>
+      <li><a href="/privacidad">Política de privacidad</a></li>
+      <li><a href="/cookies">Política de cookies</a></li>
+    </ul>
+  </div>
+</footer>

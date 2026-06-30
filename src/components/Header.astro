@@ -1,0 +1,81 @@
+---
+// ============================================
+// HEADER — cápsula de navegación centrada
+// Una sola píldora de cristal (logo + enlaces + botón), centrada.
+// - Arriba: flota separada del borde.
+// - Al hacer scroll: sube, se ancla y se vuelve más sólida.
+// - En móvil: la píldora muestra logo + hamburguesa; los enlaces
+//   se abren a pantalla completa.
+// ============================================
+
+const rutaActual = Astro.url.pathname;
+---
+
+<header class="cabecera">
+  <nav class="navegacion">
+    <a href="/" class="logo" aria-label="Atria Lab — inicio">
+      <img src="/LOGO_CUADRADO.svg" alt="Atria Lab" />
+    </a>
+
+    <div class="menu" id="menu-principal">
+      <a href="/" class={rutaActual === "/" ? "activo" : ""}>Inicio</a>
+      <a href="/servicios" class={rutaActual === "/servicios" ? "activo" : ""}>Servicios</a>
+      <a href="/nosotros" class={rutaActual === "/nosotros" ? "activo" : ""}>Nosotros</a>
+      <a href="/contacto" class="boton boton-primario boton-menu">Hablemos</a>
+    </div>
+
+    <button
+      class="menu-toggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="menu-principal"
+    >
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</header>
+
+<script>
+  // --- Menú móvil: abrir / cerrar ---
+  const toggle = document.querySelector('.menu-toggle');
+  const menu = document.getElementById('menu-principal');
+
+  if (toggle && menu) {
+    toggle.addEventListener('click', () => {
+      const abierto = menu.classList.toggle('abierto');
+      toggle.classList.toggle('activo', abierto);
+      toggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+      toggle.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+    });
+
+    menu.querySelectorAll('a').forEach((enlace) => {
+      enlace.addEventListener('click', () => {
+        menu.classList.remove('abierto');
+        toggle.classList.remove('activo');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú');
+      });
+    });
+  }
+
+  // --- Cabecera: sube y se solidifica al hacer scroll ---
+  const cabecera = document.querySelector('.cabecera');
+  if (cabecera) {
+    const alScroll = () => {
+      if (window.scrollY > 40) cabecera.classList.add('desplazado');
+      else cabecera.classList.remove('desplazado');
+    };
+    window.addEventListener('scroll', alScroll, { passive: true });
+    alScroll();
+  }
+
+  // --- Luz que sigue al cursor sobre la cápsula del menú ---
+  const navegacion = document.querySelector('.navegacion');
+  if (navegacion instanceof HTMLElement) {
+    navegacion.addEventListener('mousemove', (e) => {
+      const r = navegacion.getBoundingClientRect();
+      navegacion.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      navegacion.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  }
+</script>

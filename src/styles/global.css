@@ -1,0 +1,765 @@
+/* ============================================================
+   ATRIA LAB — HOJA DE ESTILOS GLOBAL
+   ------------------------------------------------------------
+   Este archivo define el diseño de TODO el sitio en un solo
+   lugar: colores de marca, tipografías, espaciado y el estilo
+   de cada sección. Se carga una vez desde el Layout.
+
+   Cómo está organizado (puedes buscar cada número):
+     1.  Tipografías (cargar Chillax y Satoshi)
+     2.  Variables de marca (colores, fuentes, medidas)
+     3.  Reset y fondo degradado
+     4.  Tipografía base (títulos, párrafos)
+     5.  Contenedor / ritmo de secciones
+     6.  Botones
+     7.  Cabecera y menú
+     8.  Hero
+     9.  Diferenciadores
+     10. Servicios
+     11. Proceso (constelación)
+     12. Prueba social (el caso)
+     13. Manifiesto (teaser)
+     14. CTA final
+     15. Footer
+     16. Responsive (tablet y móvil)
+     17. Accesibilidad (foco y movimiento reducido)
+   ============================================================ */
+
+
+/* === 1. TIPOGRAFÍAS ========================================
+   Cargamos las dos fuentes variables desde public/fonts/.
+   "font-display: swap" = el texto se ve enseguida con una
+   fuente de respaldo y cambia a la nuestra al cargar. */
+
+@font-face {
+  font-family: 'Chillax';
+  src: url('/fonts/Chillax-Variable.ttf') format('truetype');
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('/fonts/Satoshi-Variable.ttf') format('truetype');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* === 2. VARIABLES DE MARCA =================================
+   Definidas una vez, usadas en todo el archivo. Para cambiar
+   un color o una medida en todo el sitio, se edita aquí. */
+
+:root {
+  /* Paleta primaria (tu manual de marca) */
+  --night:   #070121;   /* Black Russian — fondo base */
+  --deep:    #290880;   /* Deep Blue — superficies y degradado */
+  --white:   #ffffff;
+
+  /* Paleta secundaria — usar con moderación (acentos) */
+  --heart:   #412ece;   /* Purple Heart — botones, acentos */
+  --melrose: #9a91ff;   /* Melrose — enlaces, detalles, cifra clave */
+  --ink:     #010101;   /* Black */
+
+  /* Derivados para texto (el blanco puro cansa la vista) */
+  --text:      rgba(255, 255, 255, 0.92);
+  --text-soft: rgba(232, 230, 245, 0.64);
+  --line:      rgba(154, 145, 255, 0.18);  /* líneas finas */
+  --surface:   rgba(154, 145, 255, 0.05);  /* relleno sutil de tarjetas */
+
+  /* Tipografía */
+  --font-display: 'Chillax', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body:    'Satoshi', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Medidas y ritmo */
+  --container:   1200px;                    /* ancho máximo del contenido */
+  --section-pad: clamp(4rem, 6vw, 5.5rem);  /* espacio vertical de secciones */
+  --gap:         clamp(1.5rem, 3vw, 2.5rem);
+
+  /* Esquinas redondeadas (estética iOS) */
+  --radius-card: 16px;   /* tarjetas */
+  --radius-lg:   22px;   /* bloques grandes, como el caso */
+}
+
+
+/* === 3. RESET Y FONDO ======================================
+   Quita estilos por defecto del navegador y pinta el fondo
+   degradado de marca que recorre toda la página. */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  background-color: var(--night);
+  /* Degradado de marca que cubre TODA la página, con zonas claramente
+     iluminadas a distintas alturas (Deep Blue, Purple Heart, Melrose). */
+  background-image:
+    radial-gradient(1000px 720px at 82% 0%,   rgba(65, 46, 206, 0.45), transparent 58%),
+    radial-gradient(950px  740px at 3% 11%,    rgba(41, 8, 128, 0.60),  transparent 55%),
+    radial-gradient(840px  660px at 96% 33%,   rgba(154, 145, 255, 0.24), transparent 55%),
+    radial-gradient(1080px 800px at 10% 55%,   rgba(65, 46, 206, 0.42), transparent 55%),
+    radial-gradient(920px  720px at 88% 76%,   rgba(41, 8, 128, 0.52),  transparent 55%),
+    radial-gradient(800px  640px at 26% 95%,   rgba(154, 145, 255, 0.20), transparent 55%),
+    linear-gradient(180deg, #070121 0%, #130742 25%, #0a0228 48%, #170b4a 72%, #090227 100%);
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; padding: 0; }
+button { font-family: inherit; }
+
+
+/* === 4. TIPOGRAFÍA BASE ====================================
+   Títulos en Chillax (más carácter), texto en Satoshi. */
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  color: var(--white);
+}
+
+h1 { font-size: clamp(2.6rem, 6vw, 5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.1rem); }
+h3 { font-size: clamp(1.2rem, 2vw, 1.5rem); font-weight: 500; }
+
+p { color: var(--text); }
+strong { color: var(--white); font-weight: 700; }
+
+
+/* === 5. CONTENEDOR Y RITMO DE SECCIONES ====================
+   Cada <section> se centra, se limita a un ancho máximo y
+   recibe su espacio vertical. El fondo degradado se ve por
+   los lados en pantallas anchas (como espacio alrededor). */
+
+section {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-block: var(--section-pad);
+  padding-inline: clamp(1.25rem, 5vw, 2rem);
+}
+
+
+/* === 6. BOTONES ============================================
+   Pastillas redondeadas con profundidad — estética iOS. */
+
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.9rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 100px;          /* pastilla: estética iPhone */
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.18s ease, background-color 0.18s ease,
+              border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.boton-primario {
+  background-color: var(--heart);
+  color: var(--white);
+  box-shadow: 0 4px 20px rgba(65, 46, 206, 0.35);
+}
+.boton-primario:hover {
+  background-color: var(--melrose);
+  color: var(--night);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(154, 145, 255, 0.45);
+}
+
+.boton-secundario {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+  border-color: var(--line);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.boton-secundario:hover {
+  border-color: var(--melrose);
+  color: var(--melrose);
+  transform: translateY(-2px);
+}
+
+
+/* === 7. CABECERA Y MENÚ ====================================
+   Cápsula de cristal flotante y CENTRADA. Arriba flota un poco
+   separada; al hacer scroll sube y se vuelve más sólida. */
+
+.cabecera {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;       /* centra la cápsula */
+  padding: 1.1rem 1rem 0;         /* flota separada del borde */
+  background: transparent;
+  transition: padding-top 0.4s ease;
+}
+.cabecera.desplazado {
+  padding-top: 0.5rem;            /* sube y se ancla al scrollear */
+}
+
+/* La barra es una sola cápsula (logo + enlaces + botón) */
+.navegacion {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding: 0.5rem 0.55rem 0.5rem 1rem;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow: hidden;
+  isolation: isolate;
+  transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+  animation: capsulaEntra 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+/* brillo que sigue al cursor sobre la cápsula (igual que las tarjetas) */
+.navegacion::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(170px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(154, 145, 255, 0.28), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.navegacion:hover::after { opacity: 1; }
+@keyframes capsulaEntra {
+  from { opacity: 0; transform: translateY(-14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.cabecera.desplazado .navegacion {
+  background: rgba(7, 1, 33, 0.55);
+  border-color: var(--line);
+  box-shadow: 0 10px 34px rgba(7, 1, 33, 0.45);
+}
+
+.logo { position: relative; z-index: 70; display: flex; }
+.logo img { height: 30px; width: auto; }
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+.menu > a:not(.boton) {
+  position: relative;
+  color: rgba(255, 255, 255, 0.5);   /* apagado en reposo */
+  font-weight: 300;            /* versión light de la tipografía */
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+/* subrayado que crece al pasar el ratón */
+.menu > a:not(.boton)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 1px;
+  background: var(--melrose);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.menu > a:not(.boton):hover,
+.menu > a.activo { color: #ffffff; }   /* blanco puro al pasar el ratón */
+.menu > a:not(.boton):hover::after,
+.menu > a.activo::after { transform: scaleX(1); }
+
+/* Botón Hablemos: píldora sin morado de base; al pasar el ratón el
+   color se rellena de DERECHA a IZQUIERDA. */
+.boton-menu {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  padding: 0.55rem 1.3rem;
+  font-size: 0.92rem;
+  font-weight: 400;
+  color: var(--white);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  box-shadow: none;
+}
+.boton-menu::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--heart);
+  transform: scaleX(0);
+  transform-origin: right center;   /* se llena de derecha a izquierda */
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.boton-menu:hover {
+  background: transparent;
+  border-color: var(--heart);
+  color: #ffffff;            /* el texto se mantiene blanco sobre el morado */
+  transform: none;
+  box-shadow: none;
+}
+.boton-menu:hover::before { transform: scaleX(1); }
+
+/* Botón hamburguesa: oculto en escritorio, visible en móvil */
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  position: relative;
+  z-index: 70;
+}
+.menu-toggle span {
+  width: 24px;
+  height: 2px;
+  background: var(--white);
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+.menu-toggle.activo span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.menu-toggle.activo span:nth-child(2) { opacity: 0; }
+.menu-toggle.activo span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* === 8. HERO ===============================================
+   El hero ocupa todo el ancho (las estrellas llegan a los
+   bordes). El texto va en una capa interior centrada y por
+   delante del canvas. */
+
+.hero {
+  position: relative;
+  min-height: 88vh;
+  max-width: none;        /* anula el límite de ancho de section: pantalla completa */
+  padding-inline: 0;      /* el canvas de estrellas toca los bordes */
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Canvas de estrellas: cubre todo el hero, por detrás del texto.
+   Se desvanece hacia abajo para fundirse con la sección siguiente. */
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+}
+
+/* Velo oscuro tras el texto: oscurece la izquierda (titular) y deja
+   limpia la derecha (constelación). Garantiza que el texto se lea.
+   (Sin oscurecido inferior, para fundir con la sección de abajo.) */
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(100deg,
+      rgba(7, 1, 33, 0.90) 0%,
+      rgba(7, 1, 33, 0.72) 30%,
+      rgba(7, 1, 33, 0.28) 55%,
+      transparent 72%);
+}
+
+/* Contenido del hero: centrado, por delante de las estrellas y el velo */
+.hero-contenido {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.4rem;
+}
+.hero-contenido h1 { max-width: 17ch; }
+.hero-contenido p {
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  max-width: 48ch;
+  color: var(--text-soft);
+}
+.hero-botones {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.6rem;
+}
+
+/* Coordenadas de Atria: monoespaciado sutil, arriba a la derecha */
+.hero-coordenadas {
+  position: absolute;
+  top: clamp(5.5rem, 13vh, 7.5rem);
+  right: clamp(1.25rem, 5vw, 3rem);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  text-align: right;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(154, 145, 255, 0.70);
+}
+.hero-coordenadas .coord-nombre {
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.25rem;
+}
+@media (max-width: 600px) {
+  .hero-coordenadas {
+    top: auto;
+    bottom: 1.5rem;
+    right: 1.25rem;
+    font-size: 0.62rem;
+  }
+}
+
+
+/* === 9. DIFERENCIADORES ====================================
+   Tres columnas. Cada una marcada con un pequeño triángulo
+   (la "A" de Atria), nuestra firma visual. */
+
+.diferenciadores {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+.diferenciador::before {
+  content: "";
+  display: block;
+  width: 0; height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 12px solid var(--melrose);
+  margin-bottom: 1.1rem;
+}
+.diferenciador h2 {
+  font-size: clamp(1.3rem, 1.8vw, 1.55rem);
+  margin-bottom: 0.7rem;
+}
+.diferenciador p { color: var(--text-soft); }
+
+
+/* === 10. SERVICIOS =========================================
+   Cuatro tarjetas con borde fino que se elevan al pasar
+   el ratón. */
+
+.servicios-preview h2 { margin-bottom: 0.5rem; }
+.servicios-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  margin: 2.5rem 0;
+}
+.servicio-tarjeta {
+  position: relative;
+  overflow: hidden;
+  padding: 1.75rem 1.5rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(7, 1, 33, 0.40);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.servicio-tarjeta:hover {
+  transform: translateY(-4px);
+  border-color: rgba(154, 145, 255, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 14px 40px rgba(7, 1, 33, 0.50);
+}
+/* el contenido (título y texto) por encima del brillo */
+.servicio-tarjeta > * { position: relative; z-index: 1; }
+/* brillo radial que sigue al cursor (luz sobre el cristal) */
+.servicio-tarjeta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(154, 145, 255, 0.20), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.servicio-tarjeta:hover::after { opacity: 1; }
+.servicio-tarjeta h3 { margin-bottom: 0.6rem; color: var(--white); }
+.servicio-tarjeta p { color: var(--text-soft); font-size: 0.97rem; }
+
+
+/* === 11. PROCESO (CONSTELACIÓN) ============================
+   Cuatro pasos conectados por una línea fina con un nodo
+   triangular en cada uno: una constelación, guiño a Atria.
+   Los números (01-04) están en el texto: es una secuencia
+   real, no decoración. */
+
+.proceso h2 { margin-bottom: 3rem; }
+.proceso-pasos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap);
+  position: relative;
+}
+/* la línea que conecta los pasos (solo escritorio) */
+.proceso-pasos::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 0; right: 0;
+  height: 1px;
+  background: var(--line);
+}
+.proceso-pasos li { position: relative; padding-top: 2.4rem; }
+/* nodo triangular de cada paso */
+.proceso-pasos li::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 11px solid var(--melrose);
+}
+.proceso-pasos li h3 {
+  color: var(--melrose);
+  font-size: 1.05rem;
+  letter-spacing: 0;
+  margin-bottom: 0.5rem;
+}
+.proceso-pasos li p { color: var(--text-soft); font-size: 0.95rem; }
+
+
+/* === 12. PRUEBA SOCIAL (EL CASO) ===========================
+   La pieza más importante para convertir. Tarjeta destacada
+   con una esquina recortada triangular (la firma, solo aquí)
+   y la cifra clave resaltada. */
+
+.prueba-social h2 { margin-bottom: 2rem; }
+.caso {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2rem, 4vw, 3.5rem);
+  background: linear-gradient(135deg, rgba(41, 8, 128, 0.50), rgba(65, 46, 206, 0.14));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 20px 60px rgba(7, 1, 33, 0.55);
+}
+/* contenido por encima del brillo */
+.caso > * { position: relative; z-index: 1; }
+/* brillo radial que sigue al cursor */
+.caso::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(154, 145, 255, 0.18), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+.caso:hover::after { opacity: 1; }
+.caso-texto {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.3rem, 2.3vw, 1.85rem);
+  line-height: 1.32;
+  color: var(--white);
+  max-width: 34ch;
+}
+.caso-texto strong { color: var(--melrose); font-weight: 600; }
+.caso-apoyo {
+  margin-top: 1.6rem;
+  font-size: 0.95rem;
+  color: var(--text-soft);
+  max-width: 62ch;
+}
+
+
+/* === 13. MANIFIESTO (TEASER) ===============================
+   Bloque tranquilo y aireado, texto grande tipo cita. */
+
+.manifiesto-teaser {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2rem;
+}
+.manifiesto-teaser p {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  line-height: 1.26;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  max-width: 30ch;
+}
+
+
+/* === 14. CTA FINAL =========================================
+   Último empujón. Más espacio vertical que el resto. */
+
+.cta-final {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+  padding-block: clamp(5rem, 10vw, 8.5rem);
+}
+.cta-final h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+.cta-final p { color: var(--text-soft); font-size: 1.15rem; }
+
+
+/* === 15. FOOTER ============================================ */
+
+.pie {
+  border-top: 1px solid var(--line);
+  margin-top: clamp(3rem, 6vw, 5rem);
+  background: rgba(7, 1, 33, 0.5);
+}
+.pie-contenido {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 2rem) 2rem;
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: var(--gap);
+}
+.pie-marca .logo img { height: 30px; }
+.pie-marca p {
+  color: var(--text-soft);
+  margin-top: 1rem;
+  max-width: 32ch;
+  font-size: 0.95rem;
+}
+.pie h3 {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--melrose);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.pie-nav a, .pie-contacto a {
+  display: inline-block;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 2;
+  transition: color 0.15s ease;
+}
+.pie-nav a:hover, .pie-contacto a:hover { color: var(--white); }
+.pie-redes { margin-top: 1.2rem; }
+.pie-legal {
+  max-width: var(--container);
+  margin-inline: auto;
+  padding: 1.5rem clamp(1.25rem, 5vw, 2rem);
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+}
+.pie-legal ul { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.pie-legal a { color: var(--text-soft); transition: color 0.15s ease; }
+.pie-legal a:hover { color: var(--white); }
+
+
+/* === 16. RESPONSIVE ========================================
+   Ajustes para tablet (≤900px) y móvil (≤600px). */
+
+@media (max-width: 900px) {
+  .servicios-grid { grid-template-columns: repeat(2, 1fr); }
+  .diferenciadores { grid-template-columns: 1fr; gap: 2rem; }
+  .proceso-pasos { grid-template-columns: repeat(2, 1fr); row-gap: 2.5rem; }
+  .proceso-pasos::before { display: none; }   /* la línea solo en escritorio */
+  .pie-contenido { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .servicios-grid { grid-template-columns: 1fr; }
+  .proceso-pasos { grid-template-columns: 1fr; }
+  .pie-contenido { grid-template-columns: 1fr; }
+  .pie-legal { flex-direction: column; align-items: flex-start; }
+
+  /* Menú móvil: pantalla completa, opaco, enlaces grandes centrados. */
+  .menu-toggle { display: flex; }
+  .menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;              /* altura real del móvil (sin barras) */
+    z-index: 60;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    background: var(--night);
+    transform: translateX(100%);
+    transition: transform 0.35s ease;
+  }
+  .menu.abierto { transform: translateX(0); }
+  .menu > a:not(.boton) { font-size: 1.6rem; color: var(--white); }
+  .boton-menu { margin-left: 0; margin-top: 1rem; font-size: 1.1rem; }
+}
+
+
+/* === 17. ACCESIBILIDAD =====================================
+   Foco visible para quien navega con teclado, y respeto a
+   quien pide menos movimiento en su sistema. */
+
+:focus-visible {
+  outline: 2px solid var(--melrose);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
