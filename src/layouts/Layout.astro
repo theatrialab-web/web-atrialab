@@ -11,6 +11,7 @@ import '../styles/global.css';
 // Carga el menú y el footer para usarlos abajo.
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
 
 // "Props" = datos que cada página le pasa a este layout.
 interface Props {
@@ -61,6 +62,10 @@ const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
     <meta name="twitter:image" content={new URL(image, SITE_URL).href} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Marca que hay JS antes de pintar: habilita el revelado al
+         hacer scroll sin parpadeo. Sin JS, todo se ve igualmente. -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
 
   <body>
@@ -74,5 +79,25 @@ const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
 
     <!-- El footer, abajo en todas las páginas -->
     <Footer />
+
+    <!-- Banner de cookies (obligatorio en España) -->
+    <CookieBanner />
+
+    <!-- Revelado suave de secciones al hacer scroll (ligero, sin peso).
+         Cada sección aparece una vez al entrar en pantalla. -->
+    <script>
+      const secciones = document.querySelectorAll('main > section:not(.hero)');
+      if (secciones.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const obs = new IntersectionObserver((entradas) => {
+          entradas.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              obs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+        secciones.forEach((s) => obs.observe(s));
+      }
+    </script>
   </body>
 </html>

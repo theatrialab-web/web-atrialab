@@ -1,0 +1,48 @@
+---
+// ============================================
+// BANNER DE COOKIES — obligatorio en España (RGPD / LSSI).
+// Informa, permite ACEPTAR o RECHAZAR con el mismo peso, y enlaza
+// a la política. No se carga NINGÚN script de analítica hasta que
+// la persona acepta (bloqueo previo por defecto).
+// ============================================
+---
+
+<div class="cookies" id="cookies-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
+  <p class="cookies-texto">
+    Usamos cookies propias y de terceros para mejorar tu experiencia y analizar el
+    tráfico. Puedes aceptarlas o rechazarlas. Más info en nuestra
+    <a href="/cookies">Política de cookies</a>.
+  </p>
+  <div class="cookies-acciones">
+    <button type="button" class="boton boton-secundario" data-cookies="rechazar">Rechazar</button>
+    <button type="button" class="boton boton-primario" data-cookies="aceptar">Aceptar</button>
+  </div>
+</div>
+
+<script>
+  const CLAVE = 'atria-cookies-consent';
+  const banner = document.getElementById('cookies-banner');
+
+  if (banner) {
+    let consentimiento = null;
+    try { consentimiento = localStorage.getItem(CLAVE); } catch (e) {}
+
+    // Solo se muestra si aún no ha elegido
+    if (!consentimiento) {
+      requestAnimationFrame(() => banner.classList.add('visible'));
+    }
+
+    banner.querySelectorAll('[data-cookies]').forEach((boton) => {
+      boton.addEventListener('click', () => {
+        const eleccion = boton.getAttribute('data-cookies');
+        try { localStorage.setItem(CLAVE, eleccion); } catch (e) {}
+        banner.classList.remove('visible');
+        if (eleccion === 'aceptar') {
+          // AQUÍ se cargarían los scripts de analítica / píxeles
+          // (Google Analytics, Meta Pixel, etc.). Hasta aceptar, nada.
+          window.dispatchEvent(new Event('cookies-aceptadas'));
+        }
+      });
+    });
+  }
+</script>

@@ -1,0 +1,211 @@
+---
+// ============================================
+// PÁGINA — SERVICIOS
+// Estilo del inicio (degradé, resaltes, luz). SEO orientado a
+// captar clientes en España: título/meta con palabras clave,
+// jerarquía de encabezados, y datos estructurados (Service + FAQ).
+// ============================================
+
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Servicios de marketing con IA en España";
+const pageDescription =
+  "Contenido, estrategia, publicidad en Meta y Google y desarrollo web con inteligencia artificial. Atraemos y convertimos clientes para tu negocio en España. Pide presupuesto sin compromiso.";
+
+// Servicios (fuente única: se usa en la página y en los datos estructurados)
+const servicios = [
+  {
+    id: "contenido-con-ia",
+    titulo: "Contenido con IA",
+    intro:
+      "Video, imagen y piezas creativas producidas con inteligencia artificial y pulidas por personas. Volumen de agencia grande, a la velocidad que tu negocio necesita.",
+    incluye: [
+      "Reels y video corto para redes sociales",
+      "Imágenes y creatividades para campañas",
+      "Guiones, copies y textos de marca",
+      "Adaptación por formato y canal",
+    ],
+    para: "negocios que necesitan publicar constante y con calidad sin montar un equipo interno.",
+  },
+  {
+    id: "estrategia-storytelling",
+    titulo: "Estrategia y storytelling",
+    intro:
+      "Antes de producir, pensamos. Definimos la idea, el mensaje y el porqué de tu marca para que cada pieza tenga dirección y no sea ruido.",
+    incluye: [
+      "Posicionamiento y mensajes clave",
+      "Línea narrativa y voz de marca",
+      "Plan de contenidos por objetivos",
+      "Embudo de captación de clientes",
+    ],
+    para: "marcas que publican mucho pero sin rumbo, o que arrancan y necesitan una base sólida.",
+  },
+  {
+    id: "paid-media",
+    titulo: "Paid media · Meta y Google Ads",
+    intro:
+      "Campañas de publicidad en Meta y Google que llegan a quien de verdad te va a comprar, con medición y optimización continua para que cada euro rinda.",
+    incluye: [
+      "Estructura y gestión de campañas",
+      "Segmentación y públicos que convierten",
+      "Creatividades pensadas para anuncios",
+      "Medición, informes y mejora continua",
+    ],
+    para: "negocios que quieren pedir cita, reservar o vender con pauta rentable.",
+  },
+  {
+    id: "desarrollo-web",
+    titulo: "Desarrollo web con IA",
+    intro:
+      "Sitios web rápidos, optimizados para buscadores y hechos a medida. Como este. Pensados para posicionar en Google y convertir visitas en clientes.",
+    incluye: [
+      "Diseño y desarrollo a medida",
+      "SEO técnico y velocidad de carga",
+      "Textos orientados a conversión",
+      "Analítica e integración de medición",
+    ],
+    para: "negocios que necesitan una web que, además de bonita, posicione y venda.",
+  },
+];
+
+// Preguntas frecuentes (visibles + en los datos estructurados FAQ)
+const faqs = [
+  {
+    q: "¿Trabajáis con negocios de cualquier sector?",
+    a: "Sí. Hemos trabajado con restaurantes, academias, clínicas, agencias de viajes y constructoras, entre otros. El método se adapta al negocio y a su cliente.",
+  },
+  {
+    q: "¿La inteligencia artificial sustituye al trabajo humano?",
+    a: "No. La IA nos da velocidad y escala; la estrategia, el criterio y la historia los ponen personas. Esa combinación es justo lo que nos diferencia.",
+  },
+  {
+    q: "¿Cuánto tardáis en ver resultados?",
+    a: "Depende del punto de partida y del objetivo. En captación con contenido y pauta solemos ver señales en las primeras semanas y crecimiento sostenido en los primeros meses.",
+  },
+  {
+    q: "¿Cuánto cuesta trabajar con Atria Lab?",
+    a: "Preparamos un presupuesto a medida según tus objetivos y el alcance del trabajo. Escríbenos y lo vemos sin compromiso.",
+  },
+  {
+    q: "¿Dónde estáis y con quién trabajáis?",
+    a: "Trabajamos con marcas de toda España, en remoto. Nos coordinamos por videollamada y correo, con reportes claros de lo que se hace.",
+  },
+];
+
+// ---- Datos estructurados (SEO) ----
+const schemaNegocio = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Atria Lab",
+  url: "https://theatrialab.com/servicios",
+  description:
+    "Agencia de marketing con inteligencia artificial: contenido, estrategia, publicidad en Meta y Google y desarrollo web para conseguir clientes.",
+  areaServed: { "@type": "Country", name: "España" },
+  email: "theatrialab@gmail.com",
+  knowsAbout: [
+    "Marketing de contenidos",
+    "Publicidad en Meta Ads y Google Ads",
+    "Estrategia y storytelling de marca",
+    "Desarrollo web y SEO",
+  ],
+  makesOffer: servicios.map((s) => ({
+    "@type": "Offer",
+    itemOffered: { "@type": "Service", name: s.titulo, description: s.intro },
+  })),
+};
+
+const schemaFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+// Iconos de línea por servicio (mismo lenguaje que el inicio)
+const iconos: Record<string, string> = {
+  "contenido-con-ia":
+    '<path d="M12 3 L13.7 9.2 L20 11 L13.7 12.8 L12 19 L10.3 12.8 L4 11 L10.3 9.2 Z" />',
+  "estrategia-storytelling":
+    '<circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" />',
+  "paid-media":
+    '<line x1="5" y1="20" x2="5" y2="14" /><line x1="12" y1="20" x2="12" y2="9" /><line x1="19" y1="20" x2="19" y2="5" />',
+  "desarrollo-web":
+    '<polyline points="8 8, 4 12, 8 16" /><polyline points="16 8, 20 12, 16 16" />',
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Cabecera de la página -->
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Servicios</span>
+    <h1 class="texto-degradado">Servicios de marketing con inteligencia artificial</h1>
+    <p class="pagina-lead">
+      Combinamos estrategia humana e IA para atraer, convencer y convertir.
+      Contenido, campañas y webs que hacen crecer negocios reales en España.
+    </p>
+    <div class="pagina-acciones">
+      <a href="/contacto" class="boton boton-primario">Pedir presupuesto</a>
+      <a href="/nosotros" class="boton boton-secundario">Nuestro método</a>
+    </div>
+  </section>
+
+  <!-- Detalle de cada servicio (intro corta + detalle) -->
+  <section class="servicios-detalle" aria-label="Detalle de servicios">
+    {servicios.map((s) => (
+      <article class="servicio-bloque" id={s.id}>
+        <div class="servicio-cab">
+          <span class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={iconos[s.id]} />
+          </span>
+          <h2 class="texto-degradado">{s.titulo}</h2>
+          <p class="servicio-intro">{s.intro}</p>
+        </div>
+        <div class="servicio-detalle">
+          <div class="servicio-incluye">
+            <h3>Qué incluye</h3>
+            <ul>
+              {s.incluye.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+          <p class="servicio-para"><strong>Ideal para:</strong> {s.para}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- Prueba (refuerzo de conversión) -->
+  <section class="servicios-prueba">
+    <p class="servicios-prueba-texto">
+      <span class="texto-degradado">De 6 a 12 matrículas por semana.</span>
+      Duplicamos la captación de Academia Pispiretas con contenido, Meta Ads y
+      Google Business — cerca de 50 inscripciones al mes.
+    </p>
+  </section>
+
+  <!-- Preguntas frecuentes (con datos estructurados) -->
+  <section class="faq" aria-label="Preguntas frecuentes">
+    <h2 class="texto-degradado">Preguntas frecuentes</h2>
+    {faqs.map((f) => (
+      <details class="faq-item">
+        <summary>{f.q}</summary>
+        <p>{f.a}</p>
+      </details>
+    ))}
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final">
+    <div class="cta-panel">
+      <h2 class="texto-degradado">¿Empezamos con tu proyecto?</h2>
+      <p>Cuéntanos tu objetivo y te preparamos un presupuesto a medida, sin compromiso.</p>
+      <a href="/contacto" class="boton boton-primario">Pedir presupuesto</a>
+    </div>
+  </section>
+
+  <!-- Datos estructurados para SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaNegocio)} />
+  <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
+</Layout>

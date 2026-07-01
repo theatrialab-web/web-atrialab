@@ -1,0 +1,132 @@
+---
+// ============================================
+// PÁGINA — NOSOTROS
+// Estilo del inicio. Filosofía (desde el manifiesto), valores,
+// equipo (tres nombres, sin fotos) y CTA. SEO de confianza para
+// España: title/meta + datos estructurados de organización.
+// ============================================
+
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Quiénes somos: estrategia humana e IA";
+const pageDescription =
+  "Somos Atria Lab, un equipo pequeño que une criterio humano e inteligencia artificial para hacer crecer marcas en España. Conoce cómo pensamos y trabajamos.";
+
+const valores = [
+  {
+    titulo: "Pensamos antes de producir",
+    texto:
+      "La IA ejecuta; las decisiones las tomamos nosotros. Nada sale sin criterio humano detrás.",
+    icono: '<path d="M12 3 L13.7 9.2 L20 11 L13.7 12.8 L12 19 L10.3 12.8 L4 11 L10.3 9.2 Z" />',
+  },
+  {
+    titulo: "Verdad para cada marca",
+    texto:
+      "No hay fórmulas ni plantillas. Cada negocio tiene su público, su tono y su porqué, y ahí trabajamos.",
+    icono: '<circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" />',
+  },
+  {
+    titulo: "Resultados, no humo",
+    texto:
+      "Medimos lo que importa: clientes, ventas, crecimiento. Si no mueve el negocio, no sirve.",
+    icono: '<line x1="5" y1="20" x2="5" y2="14" /><line x1="12" y1="20" x2="12" y2="9" /><line x1="19" y1="20" x2="19" y2="5" />',
+  },
+];
+
+// Equipo: 3 personas, solo nombres (sin fotos).
+// REEMPLAZA los nombres por los reales.
+const equipo = [
+  { nombre: "Nombre Apellido", rol: "Estrategia y dirección" },
+  { nombre: "Nombre Apellido", rol: "Contenido y producción" },
+  { nombre: "Nombre Apellido", rol: "Desarrollo y datos" },
+];
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Atria Lab",
+  url: "https://theatrialab.com",
+  description:
+    "Equipo que combina estrategia humana e inteligencia artificial para hacer crecer marcas en España.",
+  areaServed: { "@type": "Country", name: "España" },
+  email: "theatrialab@gmail.com",
+  numberOfEmployees: 3,
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Cabecera -->
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Nosotros</span>
+    <h1 class="texto-degradado">Nacimos de una idea incómoda</h1>
+    <p class="pagina-lead">
+      Que se puede construir conexión real en un entorno diseñado para
+      fragmentar la atención. Y que la tecnología, bien usada, acerca en vez
+      de alejar.
+    </p>
+  </section>
+
+  <!-- Filosofía / narrativa -->
+  <section class="nosotros-narrativa">
+    <p class="narrativa-lead">
+      No elegimos entre lo que se piensa y lo que se siente. Elegimos lo que es
+      <span class="texto-degradado">verdad para cada marca</span>.
+    </p>
+    <p>
+      La estrategia y la historia las pone una persona; la velocidad y la escala,
+      la inteligencia artificial. Esa combinación es lo que nos permite producir
+      más, y más rápido, sin perder el criterio.
+    </p>
+    <p>
+      Somos una agencia joven con una forma de trabajar clara: nada de humo, nada
+      de plantillas. Escuchamos tu negocio, diseñamos un plan a medida y medimos
+      cada paso. Lo que aprendimos captando clientes para marcas reales es lo que
+      hoy aplicamos, ahora potenciado con IA.
+    </p>
+  </section>
+
+  <!-- Valores -->
+  <section class="nosotros-valores">
+    <h2 class="texto-degradado">En qué creemos</h2>
+    <div class="diferenciadores">
+      {valores.map((v) => (
+        <div class="diferenciador">
+          <span class="dif-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={v.icono} />
+          </span>
+          <h3>{v.titulo}</h3>
+          <p>{v.texto}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Equipo -->
+  <section class="nosotros-equipo">
+    <h2 class="texto-degradado">Somos un equipo pequeño</h2>
+    <p class="equipo-intro">
+      Tres personas centradas en que tu marca crezca de verdad. Sin capas ni
+      intermediarios: hablas con quien hace el trabajo.
+    </p>
+    <div class="equipo-grid">
+      {equipo.map((m) => (
+        <div class="miembro">
+          <span class="miembro-nombre">{m.nombre}</span>
+          <span class="miembro-rol">{m.rol}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA final -->
+  <section class="cta-final">
+    <div class="cta-panel">
+      <h2 class="texto-degradado">¿Trabajamos juntos?</h2>
+      <p>Cuéntanos a dónde quieres llegar. Te decimos cómo, sin compromiso.</p>
+      <a href="/contacto" class="boton boton-primario">Hablemos</a>
+    </div>
+  </section>
+
+  <!-- Datos estructurados para SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+</Layout>

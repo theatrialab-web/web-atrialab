@@ -204,8 +204,10 @@ section {
    separada; al hacer scroll sube y se vuelve más sólida. */
 
 .cabecera {
-  position: sticky;
+  position: fixed;         /* flota por encima; el hero llena desde arriba */
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   display: flex;
   justify-content: center;       /* centra la cápsula */
@@ -307,13 +309,19 @@ section {
 .boton-menu::before {
   content: "";
   position: absolute;
-  inset: 0;
+  left: 0;
+  right: 0;
+  top: -30%;
+  bottom: -2%;
   z-index: -1;
-  border-radius: inherit;
   background: var(--heart);
-  transform: scaleX(0);
-  transform-origin: right center;   /* se llena de derecha a izquierda */
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* borde superior irregular: el frente de "pintura" que sube */
+  clip-path: polygon(
+    0 22%, 10% 10%, 22% 21%, 34% 8%, 47% 19%,
+    60% 7%, 72% 20%, 84% 9%, 100% 17%, 100% 100%, 0 100%
+  );
+  transform: translateY(115%);   /* en reposo: oculta debajo */
+  transition: transform 0.55s cubic-bezier(0.45, 0, 0.2, 1);
 }
 .boton-menu:hover {
   background: transparent;
@@ -322,7 +330,8 @@ section {
   transform: none;
   box-shadow: none;
 }
-.boton-menu:hover::before { transform: scaleX(1); }
+/* al pasar el ratón, la pintura sube y llena el botón */
+.boton-menu:hover::before { transform: translateY(0); }
 
 /* Botón hamburguesa: oculto en escritorio, visible en móvil */
 .menu-toggle {
@@ -354,7 +363,8 @@ section {
 
 .hero {
   position: relative;
-  min-height: 88vh;
+  min-height: 100vh;
+  min-height: 100dvh;     /* pantalla completa (sin que asome la sección de abajo) */
   max-width: none;        /* anula el límite de ancho de section: pantalla completa */
   padding-inline: 0;      /* el canvas de estrellas toca los bordes */
   display: flex;
@@ -371,8 +381,8 @@ section {
   width: 100%;
   height: 100%;
   display: block;
-  -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 90%, transparent 100%);
 }
 
 /* Velo oscuro tras el texto: oscurece la izquierda (titular) y deja
@@ -447,34 +457,103 @@ section {
 }
 
 
-/* === 9. DIFERENCIADORES ====================================
-   Tres columnas. Cada una marcada con un pequeño triángulo
-   (la "A" de Atria), nuestra firma visual. */
+/* === 9. MARCAS Y DIFERENCIADORES ===========================
+   Franja de marcas (logos) + diferenciadores con números
+   fantasma grandes detrás del título (estilo editorial). */
 
+/* Franja de marcas: cinta en bucle infinito, sin costura */
+.marcas {
+  text-align: center;
+}
+.marcas-titulo {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.32);
+  margin-bottom: 2.4rem;
+}
+.marcas-cinta {
+  overflow: hidden;
+  /* las marcas se desvanecen en los bordes */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+}
+.marcas-track {
+  display: flex;
+  width: max-content;
+  animation: marcasDesplaza 34s linear infinite;
+}
+.marcas-cinta:hover .marcas-track {
+  animation-play-state: paused;   /* se pausa al pasar el ratón */
+}
+/* cada grupo es idéntico; al desplazar -50% el bucle es continuo */
+.marcas-grupo {
+  display: flex;
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+  padding-right: clamp(2.5rem, 6vw, 5rem);
+}
+@keyframes marcasDesplaza {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+/* Cada marca: texto provisional. Para un logo real, reemplaza el
+   <span> por <img src="/logos/archivo.svg" alt="Nombre"> en AMBOS grupos. */
+.marca {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.25s ease;
+}
+.marca:hover { color: #ffffff; }
+.marca img {
+  height: clamp(26px, 3vw, 34px);
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.45;
+  transition: opacity 0.25s ease;
+}
+.marca:hover img { opacity: 1; }
+
+/* Diferenciadores con número fantasma grande */
 .diferenciadores {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap);
+  gap: clamp(2rem, 5vw, 4rem);
 }
-.diferenciador::before {
-  content: "";
-  display: block;
-  width: 0; height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-bottom: 12px solid var(--melrose);
-  margin-bottom: 1.1rem;
+.diferenciador { position: relative; }
+.dif-icono {
+  display: inline-flex;
+  color: var(--melrose);
+  margin-bottom: 1.3rem;
+}
+.dif-icono svg {
+  width: 38px;
+  height: auto;
+  filter: drop-shadow(0 0 10px rgba(154, 145, 255, 0.35));
 }
 .diferenciador h2 {
-  font-size: clamp(1.3rem, 1.8vw, 1.55rem);
-  margin-bottom: 0.7rem;
+  font-size: clamp(1.5rem, 2.2vw, 1.9rem);
+  margin-bottom: 0.8rem;
 }
 .diferenciador p { color: var(--text-soft); }
 
 
 /* === 10. SERVICIOS =========================================
-   Cuatro tarjetas con borde fino que se elevan al pasar
-   el ratón. */
+   Cuatro tarjetas-enlace con degradé azul→morado, título con
+   degradé, flecha de "ir a", y luz intensa al pasar el ratón. */
+
+/* utilidad: texto con degradé (blanco -> melrose) */
+.texto-degradado {
+  background: linear-gradient(115deg, #ffffff 0%, #ffffff 45%, #b3a9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
 
 .servicios-preview h2 { margin-bottom: 0.5rem; }
 .servicios-grid {
@@ -485,46 +564,69 @@ section {
 }
 .servicio-tarjeta {
   position: relative;
+  display: block;
   overflow: hidden;
   padding: 1.75rem 1.5rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  min-height: 210px;
+  /* degradé azul profundo -> morado, con luz cálida abajo (img. 2) */
+  background:
+    radial-gradient(130% 90% at 100% 108%, rgba(65, 46, 206, 0.55), transparent 60%),
+    linear-gradient(155deg, #0a0630 0%, #150a4a 52%, #241596 100%);
   border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: var(--radius-card);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(7, 1, 33, 0.40);
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 .servicio-tarjeta:hover {
-  transform: translateY(-4px);
-  border-color: rgba(154, 145, 255, 0.35);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 14px 40px rgba(7, 1, 33, 0.50);
+  transform: translateY(-5px);
+  border-color: rgba(154, 145, 255, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 20px 55px rgba(65, 46, 206, 0.45),
+    0 0 42px rgba(154, 145, 255, 0.30);
 }
-/* el contenido (título y texto) por encima del brillo */
+/* flecha "ir a servicios" en la esquina */
+.servicio-tarjeta::before {
+  content: "↗";
+  position: absolute;
+  top: 1.1rem;
+  right: 1.2rem;
+  z-index: 1;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.25s ease, transform 0.25s ease;
+}
+.servicio-tarjeta:hover::before { color: #ffffff; transform: translate(2px, -2px); }
+/* el contenido por encima del brillo */
 .servicio-tarjeta > * { position: relative; z-index: 1; }
-/* brillo radial que sigue al cursor (luz sobre el cristal) */
+/* luz radial que sigue al cursor (img. 4) */
 .servicio-tarjeta::after {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   border-radius: inherit;
-  background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%),
-              rgba(154, 145, 255, 0.20), transparent 60%);
+  background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(185, 175, 255, 0.38), transparent 60%);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
 }
 .servicio-tarjeta:hover::after { opacity: 1; }
-.servicio-tarjeta h3 { margin-bottom: 0.6rem; color: var(--white); }
-.servicio-tarjeta p { color: var(--text-soft); font-size: 0.97rem; }
+.servicio-tarjeta h3 {
+  margin-bottom: 0.6rem;
+  padding-right: 1.5rem;   /* deja aire para la flecha */
+  background: linear-gradient(115deg, #ffffff 0%, #ffffff 45%, #b3a9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.servicio-tarjeta p { color: rgba(255, 255, 255, 0.72); font-size: 0.97rem; }
 
 
-/* === 11. PROCESO (CONSTELACIÓN) ============================
-   Cuatro pasos conectados por una línea fina con un nodo
-   triangular en cada uno: una constelación, guiño a Atria.
-   Los números (01-04) están en el texto: es una secuencia
-   real, no decoración. */
+/* === 11. PROCESO ===========================================
+   Cuatro pasos en una línea. Al entrar en pantalla, la línea se
+   dibuja y los nodos se encienden uno a uno (una sola vez). */
 
 .proceso h2 { margin-bottom: 3rem; }
 .proceso-pasos {
@@ -540,18 +642,19 @@ section {
   top: 5px;
   left: 0; right: 0;
   height: 1px;
-  background: var(--line);
+  background: linear-gradient(to right, var(--melrose), rgba(154, 145, 255, 0.25));
 }
 .proceso-pasos li { position: relative; padding-top: 2.4rem; }
-/* nodo triangular de cada paso */
+/* nodo circular de cada paso */
 .proceso-pasos li::before {
   content: "";
   position: absolute;
   top: 0; left: 0;
-  width: 0; height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-bottom: 11px solid var(--melrose);
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--melrose);
+  box-shadow: 0 0 12px 2px rgba(154, 145, 255, 0.6);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 .proceso-pasos li h3 {
   color: var(--melrose);
@@ -561,27 +664,61 @@ section {
 }
 .proceso-pasos li p { color: var(--text-soft); font-size: 0.95rem; }
 
+/* --- Revelado escalonado (lo activa el JS con .animable) --- */
+.proceso.animable .proceso-pasos li {
+  opacity: 0.22;
+  transition: opacity 0.5s ease;
+}
+.proceso.animable .proceso-pasos li::before {
+  background: rgba(154, 145, 255, 0.3);
+  box-shadow: 0 0 0 0 rgba(154, 145, 255, 0);
+}
+.proceso.animable .proceso-pasos::before {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+/* al entrar en pantalla: la línea se dibuja y se encienden los nodos */
+.proceso.animable.visible .proceso-pasos::before { transform: scaleX(1); }
+.proceso.animable.visible .proceso-pasos li { opacity: 1; }
+.proceso.animable.visible .proceso-pasos li::before {
+  background: var(--melrose);
+  box-shadow: 0 0 16px 3px rgba(154, 145, 255, 0.75);
+}
+/* escalonado: uno tras otro */
+.proceso.animable.visible .proceso-pasos li:nth-child(1),
+.proceso.animable.visible .proceso-pasos li:nth-child(1)::before { transition-delay: 0.15s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(2),
+.proceso.animable.visible .proceso-pasos li:nth-child(2)::before { transition-delay: 0.45s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(3),
+.proceso.animable.visible .proceso-pasos li:nth-child(3)::before { transition-delay: 0.75s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(4),
+.proceso.animable.visible .proceso-pasos li:nth-child(4)::before { transition-delay: 1.05s; }
 
-/* === 12. PRUEBA SOCIAL (EL CASO) ===========================
-   La pieza más importante para convertir. Tarjeta destacada
-   con una esquina recortada triangular (la firma, solo aquí)
-   y la cifra clave resaltada. */
+
+/* === 12. PRUEBA SOCIAL + PROYECTOS =========================
+   Tarjeta compacta del caso (ancha y baja, estilo Servicios) y
+   galería que revela la imagen del proyecto al pasar el ratón. */
 
 .prueba-social h2 { margin-bottom: 2rem; }
+
+/* Tarjeta compacta: cifra grande + texto corto, en horizontal */
 .caso {
   position: relative;
   overflow: hidden;
-  padding: clamp(2rem, 4vw, 3.5rem);
-  background: linear-gradient(135deg, rgba(41, 8, 128, 0.50), rgba(65, 46, 206, 0.14));
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius-lg);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 20px 60px rgba(7, 1, 33, 0.55);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.75rem, 4vw, 2.75rem);
+  background:
+    radial-gradient(130% 130% at 100% 110%, rgba(65, 46, 206, 0.55), transparent 60%),
+    linear-gradient(155deg, #0a0630 0%, #150a4a 52%, #241596 100%);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-card);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 8px 30px rgba(7, 1, 33, 0.40);
 }
-/* contenido por encima del brillo */
 .caso > * { position: relative; z-index: 1; }
-/* brillo radial que sigue al cursor */
 .caso::after {
   content: "";
   position: absolute;
@@ -589,105 +726,311 @@ section {
   z-index: 0;
   border-radius: inherit;
   background: radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%),
-              rgba(154, 145, 255, 0.18), transparent 60%);
+              rgba(185, 175, 255, 0.30), transparent 60%);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
 }
 .caso:hover::after { opacity: 1; }
-.caso-texto {
+.caso-cifra { display: flex; flex-direction: column; }
+.caso-num {
   font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(1.3rem, 2.3vw, 1.85rem);
-  line-height: 1.32;
-  color: var(--white);
-  max-width: 34ch;
+  font-weight: 600;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1;
+  background: linear-gradient(115deg, #ffffff 0%, #ffffff 40%, #b3a9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
-.caso-texto strong { color: var(--melrose); font-weight: 600; }
-.caso-apoyo {
-  margin-top: 1.6rem;
-  font-size: 0.95rem;
-  color: var(--text-soft);
-  max-width: 62ch;
+.caso-num-label {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.55);
 }
+.caso-texto {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 56ch;
+}
+.caso-texto strong { color: #ffffff; font-weight: 600; }
+
+/* --- Galería de proyectos --- */
+.proyectos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--gap);
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+}
+.proyecto {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(130% 120% at 100% 110%, rgba(65, 46, 206, 0.40), transparent 60%),
+    linear-gradient(155deg, #0a0630 0%, #130a44 60%, #1d1170 100%);
+  cursor: none;   /* el cursor personalizado lo sustituye */
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.proyecto:hover {
+  transform: translateY(-4px);
+  border-color: rgba(154, 145, 255, 0.5);
+  box-shadow: 0 20px 55px rgba(65, 46, 206, 0.4), 0 0 40px rgba(154, 145, 255, 0.25);
+}
+.proyecto-ano {
+  position: absolute;
+  top: 1.1rem; left: 0; right: 0;
+  z-index: 2;
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.4);
+}
+.proyecto-marca {
+  z-index: 2;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  text-align: center;
+  background: linear-gradient(115deg, #ffffff 0%, #ffffff 45%, #b3a9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  transition: opacity 0.3s ease;
+}
+.proyecto-cat {
+  position: absolute;
+  bottom: 1.2rem; left: 0; right: 0;
+  z-index: 2;
+  text-align: center;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.62);
+}
+/* imagen del proyecto: oculta, aparece al pasar el ratón.
+   Reemplaza el fondo por tu imagen: background-image o un <img>. */
+.proyecto-imagen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0;
+  background:
+    radial-gradient(90% 90% at 30% 20%, rgba(154, 145, 255, 0.4), transparent 60%),
+    linear-gradient(135deg, #2a1a8c, #4a37c8);
+  background-size: cover;
+  background-position: center;
+  transition: opacity 0.4s ease;
+}
+.proyecto:hover .proyecto-imagen { opacity: 1; }
+.proyecto:hover .proyecto-marca { opacity: 0; }
+
+/* Cursor personalizado "Ver proyecto" */
+.cursor-ver {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 90;
+  pointer-events: none;
+  padding: 0.55rem 1.15rem;
+  border-radius: 100px;
+  background: var(--heart);
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 8px 24px rgba(65, 46, 206, 0.5);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.cursor-ver.activo { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.cursor-ver span { opacity: 0.8; }
 
 
 /* === 13. MANIFIESTO (TEASER) ===============================
-   Bloque tranquilo y aireado, texto grande tipo cita. */
+   Etiqueta + frase principal grande (con resalte) + apoyo. */
 
 .manifiesto-teaser {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
-.manifiesto-teaser p {
+.manifiesto-eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 300;
+  color: rgba(154, 145, 255, 0.75);
+}
+.manifiesto-lead {
   font-family: var(--font-display);
   font-weight: 300;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
-  line-height: 1.26;
+  line-height: 1.24;
   letter-spacing: -0.01em;
   color: var(--white);
-  max-width: 30ch;
+  max-width: 34ch;
+}
+.manifiesto-apoyo {
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  line-height: 1.55;
+  color: var(--text-soft);
+  max-width: 46ch;
+  margin-top: -0.3rem;
 }
 
 
 /* === 14. CTA FINAL =========================================
-   Último empujón. Más espacio vertical que el resto. */
+   Panel destacado con degradé, foco de luz y título resaltado. */
 
-.cta-final {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.25rem;
-  padding-block: clamp(5rem, 10vw, 8.5rem);
+.cta-final { text-align: center; }
+.cta-panel {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 5.5rem) clamp(1.5rem, 5vw, 3rem);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(154, 145, 255, 0.25);
+  background:
+    radial-gradient(120% 130% at 50% -10%, rgba(65, 46, 206, 0.55), transparent 60%),
+    linear-gradient(160deg, #0a0630 0%, #150a4a 55%, #241596 100%);
+  box-shadow: 0 30px 80px rgba(7, 1, 33, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
-.cta-final h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
-.cta-final p { color: var(--text-soft); font-size: 1.15rem; }
+/* foco de luz superior */
+.cta-panel::before {
+  content: "";
+  position: absolute;
+  top: -45%;
+  left: 50%;
+  width: 60%;
+  height: 100%;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(154, 145, 255, 0.35), transparent 65%);
+  filter: blur(30px);
+  pointer-events: none;
+}
+.cta-panel > * { position: relative; z-index: 1; }
+.cta-final h2 {
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  margin-bottom: 0.6rem;
+}
+.cta-final p {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 1.15rem;
+  margin-bottom: 1.8rem;
+}
 
 
-/* === 15. FOOTER ============================================ */
+/* === 15. FOOTER ============================================
+   Multicolumna (estilo agencia): marca + redes, servicios,
+   navegación y contacto. Foco de luz arriba y línea con degradé. */
 
 .pie {
-  border-top: 1px solid var(--line);
-  margin-top: clamp(3rem, 6vw, 5rem);
-  background: rgba(7, 1, 33, 0.5);
+  position: relative;
+  margin-top: clamp(4rem, 8vw, 6rem);
+  background:
+    radial-gradient(80% 120% at 50% 0%, rgba(65, 46, 206, 0.20), transparent 70%),
+    rgba(7, 1, 33, 0.65);
 }
-.pie-contenido {
+.pie::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(154, 145, 255, 0.6), transparent);
+}
+.pie-top {
   max-width: var(--container);
   margin-inline: auto;
-  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 2rem) 2rem;
+  padding: clamp(3rem, 6vw, 4.5rem) clamp(1.25rem, 5vw, 2rem) 2.5rem;
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
-  gap: var(--gap);
+  grid-template-columns: 1.6fr 1fr 1fr 1.3fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
-.pie-marca .logo img { height: 30px; }
+.pie-marca .logo img { height: 44px; }
 .pie-marca p {
   color: var(--text-soft);
-  margin-top: 1rem;
-  max-width: 32ch;
+  margin-top: 1.1rem;
+  max-width: 30ch;
   font-size: 0.95rem;
+  line-height: 1.55;
+}
+.pie-redes {
+  display: flex;
+  gap: 0.7rem;
+  margin-top: 1.4rem;
+}
+.pie-red {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--text-soft);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+.pie-red svg { width: 18px; height: 18px; }
+.pie-red:hover {
+  color: #ffffff;
+  border-color: var(--heart);
+  background: rgba(65, 46, 206, 0.35);
+  transform: translateY(-2px);
 }
 .pie h3 {
   font-family: var(--font-body);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   color: var(--melrose);
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
-.pie-nav a, .pie-contacto a {
-  display: inline-block;
+.pie-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+.pie-col a {
+  position: relative;
   color: var(--text-soft);
   font-size: 0.95rem;
-  line-height: 2;
-  transition: color 0.15s ease;
+  transition: color 0.2s ease;
 }
-.pie-nav a:hover, .pie-contacto a:hover { color: var(--white); }
-.pie-redes { margin-top: 1.2rem; }
+.pie-col a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -3px;
+  width: 100%; height: 1px;
+  background: var(--melrose);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease;
+}
+.pie-col a:hover { color: #ffffff; }
+.pie-col a:hover::after { transform: scaleX(1); }
+/* contacto con icono */
+.pie-contacto-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+.pie-contacto-item svg { width: 18px; height: 18px; color: var(--melrose); flex-shrink: 0; }
+.pie-contacto-item::after { display: none; }   /* sin subrayado aquí */
+.pie-cta { margin-top: 0.6rem; padding: 0.6rem 1.4rem; font-size: 0.92rem; }
 .pie-legal {
   max-width: var(--container);
   margin-inline: auto;
@@ -701,8 +1044,15 @@ section {
   color: var(--text-soft);
 }
 .pie-legal ul { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-.pie-legal a { color: var(--text-soft); transition: color 0.15s ease; }
-.pie-legal a:hover { color: var(--white); }
+.pie-legal a { color: var(--text-soft); transition: color 0.2s ease; }
+.pie-legal a:hover { color: #ffffff; }
+@media (max-width: 900px) {
+  .pie-top { grid-template-columns: 1fr 1fr; }
+  .pie-marca { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .pie-top { grid-template-columns: 1fr; }
+}
 
 
 /* === 16. RESPONSIVE ========================================
@@ -713,17 +1063,31 @@ section {
   .diferenciadores { grid-template-columns: 1fr; gap: 2rem; }
   .proceso-pasos { grid-template-columns: repeat(2, 1fr); row-gap: 2.5rem; }
   .proceso-pasos::before { display: none; }   /* la línea solo en escritorio */
-  .pie-contenido { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 600px) {
   .servicios-grid { grid-template-columns: 1fr; }
   .proceso-pasos { grid-template-columns: 1fr; }
-  .pie-contenido { grid-template-columns: 1fr; }
   .pie-legal { flex-direction: column; align-items: flex-start; }
+  .caso { grid-template-columns: 1fr; text-align: left; }
+  .proyectos-grid { grid-template-columns: 1fr; }
 
   /* Menú móvil: pantalla completa, opaco, enlaces grandes centrados. */
   .menu-toggle { display: flex; }
+
+  /* La cápsula no debe recortar ni "contener" el overlay fijo:
+     quitamos overflow/desenfoque/transform en móvil. */
+  .navegacion {
+    overflow: visible;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    animation: none;
+    transform: none;
+    background: rgba(7, 1, 33, 0.6);
+    border-color: var(--line);
+  }
+  .navegacion::after { display: none; }
+
   .menu {
     position: fixed;
     inset: 0;
@@ -762,4 +1126,267 @@ section {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+
+/* === 18. PÁGINA SERVICIOS ==================================
+   Reutiliza el lenguaje del inicio: degradé, resaltes y luz. */
+
+.pagina-hero {
+  text-align: center;
+  padding-top: clamp(7rem, 13vh, 9.5rem);
+  padding-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+.pagina-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-weight: 300;
+  color: rgba(154, 145, 255, 0.75);
+  margin-bottom: 1.2rem;
+}
+.pagina-hero h1 {
+  font-size: clamp(2.3rem, 5.5vw, 4rem);
+  line-height: 1.05;
+  max-width: 20ch;
+  margin: 0 auto 1.2rem;
+}
+.pagina-lead {
+  color: var(--text-soft);
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  line-height: 1.5;
+  max-width: 60ch;
+  margin: 0 auto 2rem;
+}
+.pagina-acciones {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Bloques de servicio: intro (izq) + detalle (der) */
+.servicio-bloque {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--line);
+}
+.servicio-icono { display: inline-flex; color: var(--melrose); margin-bottom: 1rem; }
+.servicio-icono svg {
+  width: 40px; height: auto;
+  filter: drop-shadow(0 0 10px rgba(154, 145, 255, 0.35));
+}
+.servicio-cab h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 0.8rem; }
+.servicio-intro { color: var(--text-soft); font-size: 1.05rem; line-height: 1.55; }
+.servicio-incluye h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--melrose);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+.servicio-incluye ul { display: grid; gap: 0.7rem; }
+.servicio-incluye li {
+  position: relative;
+  padding-left: 1.7rem;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.4;
+}
+.servicio-incluye li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--melrose);
+  font-weight: 700;
+}
+.servicio-para { margin-top: 1.5rem; color: var(--text-soft); }
+.servicio-para strong { color: #ffffff; }
+
+/* Franja de prueba */
+.servicios-prueba { text-align: center; }
+.servicios-prueba-texto {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.3rem, 2.6vw, 2rem);
+  line-height: 1.3;
+  max-width: 30ch;
+  margin-inline: auto;
+  color: var(--white);
+}
+
+/* Preguntas frecuentes (acordeón nativo, sin JS) */
+.faq { max-width: 820px; margin-inline: auto; }
+.faq h2 { text-align: center; font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 2rem; }
+.faq-item { border-top: 1px solid var(--line); }
+.faq-item:last-child { border-bottom: 1px solid var(--line); }
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1.2rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  color: var(--white);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+";
+  color: var(--melrose);
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 0.25s ease;
+}
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item p {
+  padding: 0 0 1.4rem;
+  color: var(--text-soft);
+  line-height: 1.6;
+  max-width: 70ch;
+}
+
+@media (max-width: 900px) {
+  .servicio-bloque { grid-template-columns: 1fr; gap: 1.5rem; padding-block: 2.5rem; }
+}
+
+
+/* === 19. PÁGINA NOSOTROS ===================================
+   Reutiliza .pagina-hero y el lenguaje del inicio. */
+
+.nosotros-narrativa {
+  max-width: 68ch;
+  margin-inline: auto;
+  display: grid;
+  gap: 1.5rem;
+}
+.narrativa-lead {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 3vw, 2.3rem);
+  line-height: 1.28;
+  color: var(--white);
+}
+.nosotros-narrativa p:not(.narrativa-lead) {
+  color: var(--text-soft);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.nosotros-valores h2,
+.nosotros-equipo h2 {
+  text-align: center;
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  margin-bottom: 2.5rem;
+}
+/* título de cada valor (usa h3 en esta página) */
+.diferenciador h3 {
+  font-size: clamp(1.3rem, 2vw, 1.6rem);
+  margin-bottom: 0.7rem;
+  color: var(--white);
+}
+
+.equipo-intro {
+  text-align: center;
+  max-width: 52ch;
+  margin: 0 auto 2.5rem;
+  color: var(--text-soft);
+  font-size: 1.1rem;
+  line-height: 1.55;
+}
+.equipo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap);
+}
+.miembro {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: rgba(154, 145, 255, 0.04);
+}
+.miembro-nombre {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  color: var(--white);
+  margin-bottom: 0.4rem;
+}
+.miembro-rol {
+  font-size: 0.82rem;
+  color: var(--melrose);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+@media (max-width: 900px) {
+  .equipo-grid { grid-template-columns: 1fr; }
+}
+
+
+/* === 20. REVELADO AL HACER SCROLL ==========================
+   Movimiento sutil: cada sección aparece al entrar en pantalla.
+   Solo con JS activo; sin JS, todo se ve normal. */
+
+.js main > section:not(.hero) {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity, transform;
+}
+.js main > section.visible {
+  opacity: 1;
+  transform: none;
+}
+/* Sin animación para quien pide menos movimiento (y a prueba de fallos) */
+@media (prefers-reduced-motion: reduce) {
+  .js main > section:not(.hero) { opacity: 1; transform: none; }
+}
+
+
+/* === 21. BANNER DE COOKIES =================================
+   Fijo abajo, con Aceptar/Rechazar de igual peso. */
+
+.cookies {
+  position: fixed;
+  left: 1rem; right: 1rem; bottom: 1rem;
+  z-index: 80;
+  max-width: 660px;
+  margin-inline: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(154, 145, 255, 0.25);
+  background: rgba(10, 6, 40, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 20px 60px rgba(7, 1, 33, 0.6);
+  transform: translateY(160%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.4s ease;
+}
+.cookies.visible { transform: none; opacity: 1; pointer-events: auto; }
+.cookies-texto {
+  flex: 1 1 260px;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+.cookies-texto a { color: var(--melrose); text-decoration: underline; }
+.cookies-acciones { display: flex; gap: 0.7rem; }
+.cookies-acciones .boton { padding: 0.55rem 1.25rem; font-size: 0.9rem; }
+@media (max-width: 560px) {
+  .cookies-acciones { width: 100%; }
+  .cookies-acciones .boton { flex: 1; }
 }

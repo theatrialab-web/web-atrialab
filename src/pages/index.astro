@@ -51,11 +51,53 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
   </section>
 
   <!-- ====================================================== -->
+  <!-- SECCIÓN — MARCAS (cinta en bucle infinito)             -->
+  <!-- PLACEHOLDERS: cada <span class="marca"> es provisional.-->
+  <!-- Para un logo real, sustituye el span por:              -->
+  <!--   <img src="/logos/nombre.svg" alt="Nombre" />          -->
+  <!-- IMPORTANTE: hazlo en LOS DOS grupos (el visible y la    -->
+  <!-- copia), para que el bucle no tenga costura.            -->
+  <!-- ====================================================== -->
+  <section class="marcas">
+    <p class="marcas-titulo">Confían en nosotros</p>
+    <div class="marcas-cinta">
+      <div class="marcas-track">
+        <!-- Grupo 1 -->
+        <div class="marcas-grupo">
+          <span class="marca">Restaurante</span>
+          <span class="marca">Academia de Belleza</span>
+          <span class="marca">Academia de Ajedrez</span>
+          <span class="marca">Clínica Estética</span>
+          <span class="marca">Agencia de Viajes</span>
+          <span class="marca">Constructora 01</span>
+          <span class="marca">Constructora 02</span>
+        </div>
+        <!-- Grupo 2 (copia idéntica para el bucle sin costura) -->
+        <div class="marcas-grupo" aria-hidden="true">
+          <span class="marca">Restaurante</span>
+          <span class="marca">Academia de Belleza</span>
+          <span class="marca">Academia de Ajedrez</span>
+          <span class="marca">Clínica Estética</span>
+          <span class="marca">Agencia de Viajes</span>
+          <span class="marca">Constructora 01</span>
+          <span class="marca">Constructora 02</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
   <!-- SECCIÓN 2 — DIFERENCIADORES                            -->
-  <!-- Los tres puntos que os separan, con el ángulo IA.      -->
+  <!-- Números fantasma grandes detrás de cada título.        -->
   <!-- ====================================================== -->
   <section class="diferenciadores">
     <div class="diferenciador">
+      <span class="dif-icono" aria-hidden="true">
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="20" cy="12" r="8" />
+        </svg>
+      </span>
       <h2>Humano + máquina</h2>
       <p>
         La estrategia y la historia las pone una persona; la velocidad y la
@@ -63,6 +105,12 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
       </p>
     </div>
     <div class="diferenciador">
+      <span class="dif-icono" aria-hidden="true">
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 5, 15 12, 6 19" />
+          <polyline points="16 5, 25 12, 16 19" />
+        </svg>
+      </span>
       <h2>Más, y más rápido</h2>
       <p>
         Producimos video, imagen y contenido a un ritmo que una agencia
@@ -70,6 +118,12 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
       </p>
     </div>
     <div class="diferenciador">
+      <span class="dif-icono" aria-hidden="true">
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 18, 12 11, 17 15, 28 5" />
+          <polyline points="21 5, 28 5, 28 12" />
+        </svg>
+      </span>
       <h2>Resultados, no humo</h2>
       <p>
         La IA es la herramienta, no la excusa. Medimos lo que importa:
@@ -83,24 +137,24 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
   <!-- Cuatro tarjetas que enlazan a la página de servicios.  -->
   <!-- ====================================================== -->
   <section class="servicios-preview">
-    <h2>Lo que hacemos</h2>
+    <h2 class="texto-degradado">Lo que hacemos</h2>
     <div class="servicios-grid">
-      <div class="servicio-tarjeta">
+      <a href="/servicios" class="servicio-tarjeta">
         <h3>Contenido con IA</h3>
         <p>Video, imagen y piezas creativas generadas y refinadas con inteligencia artificial.</p>
-      </div>
-      <div class="servicio-tarjeta">
+      </a>
+      <a href="/servicios" class="servicio-tarjeta">
         <h3>Estrategia y storytelling</h3>
         <p>La capa humana: la idea, el mensaje y el porqué detrás de cada pieza.</p>
-      </div>
-      <div class="servicio-tarjeta">
+      </a>
+      <a href="/servicios" class="servicio-tarjeta">
         <h3>Paid media</h3>
         <p>Campañas en Meta y Google que llegan a quien de verdad te va a comprar.</p>
-      </div>
-      <div class="servicio-tarjeta">
+      </a>
+      <a href="/servicios" class="servicio-tarjeta">
         <h3>Desarrollo web con IA</h3>
         <p>Sitios rápidos, optimizados y a medida. Como este.</p>
-      </div>
+      </a>
     </div>
     <a href="/servicios" class="boton boton-primario">Conoce nuestros servicios</a>
   </section>
@@ -132,24 +186,54 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
   </section>
 
   <!-- ====================================================== -->
-  <!-- SECCIÓN 5 — PRUEBA SOCIAL                              -->
-  <!-- El caso real de Pispiretas, con el puente hacia la IA. -->
+  <!-- SECCIÓN 5 — PRUEBA SOCIAL + PROYECTOS                   -->
+  <!-- Tarjeta compacta del caso + galería que revela imagen.  -->
   <!-- ====================================================== -->
   <section class="prueba-social">
-    <h2>Resultados reales</h2>
+    <h2 class="texto-degradado">Resultados reales</h2>
+
+    <!-- Tarjeta compacta (ancha y baja), estilo Servicios -->
     <div class="caso">
+      <div class="caso-cifra">
+        <span class="caso-num">6 → 12</span>
+        <span class="caso-num-label">matrículas / semana</span>
+      </div>
       <p class="caso-texto">
-        Academia Pispiretas (Medellín) nos confió su captación de alumnas.
-        Con contenido, pauta en Meta Ads y optimización de Google Business,
-        <strong>duplicamos sus matrículas semanales —de 6 a 12 alumnas—
-        alcanzando cerca de 50 inscripciones al mes.</strong> Hoy aplicamos
-        ese mismo método, potenciado con inteligencia artificial: producimos
-        más, y más rápido.
+        <strong>Academia Pispiretas (Medellín):</strong> duplicamos su captación
+        de alumnas con contenido, Meta Ads y Google Business — cerca de 50
+        inscripciones al mes. Hoy aplicamos ese método potenciado con IA.
       </p>
-      <p class="caso-apoyo">
-        En redes, una de las cuentas que gestionamos superó las 130.000
-        visualizaciones en un mes, con el 77% del alcance en público nuevo.
-      </p>
+    </div>
+
+    <!-- Galería de proyectos.                                    -->
+    <!-- PLACEHOLDERS: reemplaza <span class="proyecto-marca"> por -->
+    <!-- el logo (<img>), y dentro de .proyecto-imagen pon la      -->
+    <!-- imagen real del proyecto (<img> o background-image).      -->
+    <div class="proyectos-grid">
+      <a href="/servicios" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2025</span>
+        <span class="proyecto-marca">Academia de Belleza</span>
+        <span class="proyecto-cat">Contenido · Meta Ads</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+      <a href="/servicios" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2025</span>
+        <span class="proyecto-marca">Restaurante</span>
+        <span class="proyecto-cat">Marca · Redes</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+      <a href="/servicios" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2026</span>
+        <span class="proyecto-marca">Clínica Estética</span>
+        <span class="proyecto-cat">Web · Paid media</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+      <a href="/servicios" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2025</span>
+        <span class="proyecto-marca">Constructora</span>
+        <span class="proyecto-cat">Sitio web</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
     </div>
   </section>
 
@@ -158,11 +242,15 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
   <!-- Anzuelo corto que lleva a la página Nosotros.          -->
   <!-- ====================================================== -->
   <section class="manifiesto-teaser">
-    <p>
-      Nacimos con una idea incómoda: que se puede construir conexión real
-      en un entorno diseñado para fragmentar la atención. No elegimos entre
-      lo que se piensa y lo que se siente. Elegimos lo que es verdad para
-      cada marca.
+    <span class="manifiesto-eyebrow">Quiénes somos</span>
+    <p class="manifiesto-lead">
+      Nacimos con una idea incómoda: se puede construir
+      <span class="texto-degradado">conexión real</span> en un entorno
+      diseñado para fragmentar la atención.
+    </p>
+    <p class="manifiesto-apoyo">
+      No elegimos entre lo que se piensa y lo que se siente.
+      Elegimos lo que es verdad para cada marca.
     </p>
     <a href="/nosotros" class="boton boton-secundario">Nuestra historia</a>
   </section>
@@ -171,10 +259,15 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
   <!-- SECCIÓN 7 — CTA FINAL                                  -->
   <!-- ====================================================== -->
   <section class="cta-final">
-    <h2>¿Hablamos de tu negocio?</h2>
-    <p>Cuéntanos a dónde quieres llegar. Te decimos cómo.</p>
-    <a href="/contacto" class="boton boton-primario">Hablemos</a>
+    <div class="cta-panel">
+      <h2 class="texto-degradado">¿Hablamos de tu negocio?</h2>
+      <p>Cuéntanos a dónde quieres llegar. Te decimos cómo.</p>
+      <a href="/contacto" class="boton boton-primario">Hablemos</a>
+    </div>
   </section>
+
+  <!-- Cursor personalizado que aparece sobre la galería de proyectos -->
+  <div class="cursor-ver" aria-hidden="true">Ver proyecto <span>›</span></div>
 
 </Layout>
 
@@ -191,4 +284,36 @@ const pageDescription = "Combinamos estrategia humana e inteligencia artificial 
       el.style.setProperty('--my', `${e.clientY - r.top}px`);
     });
   });
+
+  // REVELADO DEL PROCESO: al entrar en pantalla, los nodos se
+  // encienden uno a uno y la línea se dibuja. Solo una vez.
+  const proceso = document.querySelector('.proceso');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (proceso && !reduce) {
+    proceso.classList.add('animable');
+    const io = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => {
+        if (e.isIntersecting) {
+          proceso.classList.add('visible');
+          io.disconnect();   // una sola vez
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(proceso);
+  }
+
+  // CURSOR "VER PROYECTO": sobre la galería, el cursor se convierte
+  // en una píldora que sigue al ratón. Solo con ratón (no en táctil).
+  const cursorVer = document.querySelector('.cursor-ver');
+  const proyectos = document.querySelectorAll('[data-proyecto]');
+  if (cursorVer && proyectos.length && !('ontouchstart' in window)) {
+    proyectos.forEach((p) => {
+      p.addEventListener('mouseenter', () => cursorVer.classList.add('activo'));
+      p.addEventListener('mouseleave', () => cursorVer.classList.remove('activo'));
+      p.addEventListener('mousemove', (e) => {
+        cursorVer.style.left = `${e.clientX}px`;
+        cursorVer.style.top = `${e.clientY}px`;
+      });
+    });
+  }
 </script>
