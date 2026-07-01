@@ -1,0 +1,76 @@
+---
+// ============================================
+// PÁGINA — POLÍTICA DE COOKIES (España, AEPD)
+// PLANTILLA: ajusta la tabla de cookies a las que realmente uses.
+// Incluye botón para revocar el consentimiento (reabre el banner).
+// ============================================
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Política de cookies";
+const pageDescription =
+  "Qué cookies utiliza Atria Lab y cómo puedes gestionarlas.";
+const actualizado = "julio de 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Legal</span>
+    <h1 class="texto-degradado">Política de cookies</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Plantilla pendiente de completar.</strong> Declara aquí únicamente
+    las cookies que el sitio use de verdad. Mientras no cargues analítica ni
+    herramientas externas, solo habrá cookies técnicas. Revísala con un
+    profesional antes de publicarla.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Última actualización: {actualizado}</p>
+
+    <h2>1. Qué son las cookies</h2>
+    <p>
+      Una cookie es un pequeño archivo que un sitio web guarda en tu navegador
+      para recordar información sobre tu visita. Algunas son imprescindibles
+      para que la web funcione; otras sirven para medir o personalizar.
+    </p>
+
+    <h2>2. Cookies que utilizamos</h2>
+    <h3>Técnicas (necesarias)</h3>
+    <p>
+      Guardamos localmente tu decisión sobre el aviso de cookies
+      (<strong>atria-cookies-consent</strong>) para no volver a mostrártelo en
+      cada visita. Es imprescindible y no requiere consentimiento.
+    </p>
+    <h3>Analíticas o de terceros (opcionales)</h3>
+    <p>
+      <span class="dato">[Si activas Google Analytics, Meta Pixel u otras,
+      descríbelas aquí: nombre, proveedor, finalidad y duración.]</span>
+      Estas cookies solo se cargan si das tu consentimiento.
+    </p>
+
+    <h2>3. Cómo gestionar tus preferencias</h2>
+    <p>
+      Puedes aceptar o rechazar las cookies no esenciales desde el aviso inicial,
+      y cambiar tu decisión cuando quieras:
+    </p>
+    <p>
+      <button type="button" class="cookie-reset" data-reset-cookies>
+        Cambiar mis preferencias de cookies
+      </button>
+    </p>
+    <p>
+      También puedes bloquear o eliminar las cookies desde la configuración de
+      tu navegador. Ten en cuenta que desactivar las técnicas puede afectar al
+      funcionamiento del sitio.
+    </p>
+  </section>
+
+  <script>
+    // Revoca el consentimiento guardado y recarga: el banner vuelve a salir.
+    document.querySelector('[data-reset-cookies]')?.addEventListener('click', () => {
+      try { localStorage.removeItem('atria-cookies-consent'); } catch (e) {}
+      location.reload();
+    });
+  </script>
+</Layout>

@@ -69,6 +69,13 @@ const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
   </head>
 
   <body>
+    <!-- Fondo animado (lámpara de lava), detrás de todo -->
+    <div class="fondo-lava" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+    </div>
+
     <!-- El menú, arriba en todas las páginas -->
     <Header />
 
@@ -98,6 +105,27 @@ const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
         }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
         secciones.forEach((s) => obs.observe(s));
       }
+    </script>
+
+    <!-- Iconos SVG que se dibujan al entrar en pantalla -->
+    <script>
+      (function () {
+        const iconos = document.querySelectorAll('.dif-icono, .servicio-icono');
+        if (!iconos.length) return;
+        if (!('IntersectionObserver' in window)) {
+          iconos.forEach((i) => i.classList.add('dibujado'));
+          return;
+        }
+        const obs = new IntersectionObserver((entradas, o) => {
+          entradas.forEach((e) => {
+            if (e.isIntersecting) {
+              e.target.classList.add('dibujado');
+              o.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.4 });
+        iconos.forEach((i) => obs.observe(i));
+      })();
     </script>
   </body>
 </html>

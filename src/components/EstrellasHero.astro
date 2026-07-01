@@ -15,6 +15,10 @@
 ---
 
 <canvas class="hero-canvas" data-estrellas aria-hidden="true"></canvas>
+<div class="atria-tip" data-atria-tip role="tooltip">
+  <strong>Atria</strong>
+  <span>La estrella más brillante del Triángulo Austral. La elegimos porque guía: aporta dirección y criterio en medio del ruido.</span>
+</div>
 
 <script>
   import * as THREE from 'three';
@@ -228,9 +232,36 @@
       });
 
       let raton_x = 0, raton_y = 0;
+      let cursorX = -9999, cursorY = -9999;
+      const tip = document.querySelector('[data-atria-tip]') as HTMLElement | null;
+      const vProy = new THREE.Vector3();
+
+      // Proyecta Atria a coordenadas de pantalla y muestra el tooltip
+      // si el cursor está lo bastante cerca.
+      function actualizarTip() {
+        if (!tip) return;
+        atria.getWorldPosition(vProy);
+        vProy.project(camara);
+        if (vProy.z > 1) { tip.classList.remove('visible'); return; }
+        const r = canvas.getBoundingClientRect();
+        const sx = r.left + (vProy.x * 0.5 + 0.5) * r.width;
+        const sy = r.top + (-vProy.y * 0.5 + 0.5) * r.height;
+        const dist = Math.hypot(cursorX - sx, cursorY - sy);
+        if (dist < 48) {
+          tip.style.left = sx + 'px';
+          tip.style.top = sy + 'px';
+          tip.classList.add('visible');
+        } else {
+          tip.classList.remove('visible');
+        }
+      }
+
       window.addEventListener('mousemove', (e) => {
         raton_x = e.clientX / window.innerWidth - 0.5;
         raton_y = e.clientY / window.innerHeight - 0.5;
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+        if (movimientoReducido) actualizarTip();
       });
 
       let visible = true;
@@ -303,6 +334,8 @@
         camara.position.x += (raton_x * 60 - camara.position.x) * 0.03;
         camara.position.y += (-raton_y * 60 - camara.position.y) * 0.03;
         camara.lookAt(escena.position);
+
+        actualizarTip();
 
         renderer!.render(escena, camara);
       }

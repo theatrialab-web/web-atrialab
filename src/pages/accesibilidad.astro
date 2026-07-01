@@ -1,0 +1,50 @@
+---
+// ============================================
+// PÁGINA — ACCESIBILIDAD (declaración breve)
+// PLANTILLA orientativa; ajústala a tu nivel real de cumplimiento.
+// ============================================
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Accesibilidad";
+const pageDescription =
+  "Compromiso de Atria Lab con una web accesible y cómo reportar barreras.";
+const actualizado = "julio de 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Compromiso</span>
+    <h1 class="texto-degradado">Accesibilidad</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Plantilla orientativa.</strong> Ajusta el nivel de cumplimiento a la
+    realidad del sitio. Esta declaración no sustituye una auditoría formal.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Última actualización: {actualizado}</p>
+
+    <h2>Nuestro compromiso</h2>
+    <p>
+      Queremos que este sitio sea usable por el mayor número de personas
+      posible. Trabajamos para acercarnos a las pautas <strong>WCAG 2.1</strong>
+      en aspectos como contraste, navegación por teclado, textos alternativos y
+      respeto por la preferencia de <em>reducir movimiento</em> del sistema.
+    </p>
+
+    <h2>Medidas aplicadas</h2>
+    <ul>
+      <li>Las animaciones se atenúan si tu dispositivo pide reducir movimiento.</li>
+      <li>Las imágenes decorativas se marcan como tales para los lectores de pantalla.</li>
+      <li>El contenido se estructura con encabezados y etiquetas semánticas.</li>
+    </ul>
+
+    <h2>¿Encontraste una barrera?</h2>
+    <p>
+      Si algo te resulta difícil de usar, cuéntanoslo en
+      <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a> y lo
+      revisaremos lo antes posible.
+    </p>
+  </section>
+</Layout>

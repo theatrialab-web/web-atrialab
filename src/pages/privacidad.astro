@@ -1,0 +1,85 @@
+---
+// ============================================
+// PÁGINA — POLÍTICA DE PRIVACIDAD (RGPD + LOPDGDD, España)
+// PLANTILLA: rellena los datos entre <span class="dato"> y
+// revísala con un profesional antes de publicar.
+// ============================================
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Política de privacidad";
+const pageDescription =
+  "Cómo Atria Lab trata tus datos personales conforme al RGPD y la LOPDGDD.";
+const actualizado = "julio de 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Legal</span>
+    <h1 class="texto-degradado">Política de privacidad</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Plantilla pendiente de completar.</strong> Ajusta responsable,
+    finalidades y plazos a tu caso real. Si usas formularios, analítica o
+    herramientas externas, deben reflejarse aquí. Revísala con un profesional
+    antes de publicarla.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Última actualización: {actualizado}</p>
+
+    <h2>1. Responsable del tratamiento</h2>
+    <ul>
+      <li>Responsable: <span class="dato">[Nombre o razón social]</span></li>
+      <li>NIF/DNI: <span class="dato">[NIF o DNI]</span></li>
+      <li>Contacto: <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a></li>
+    </ul>
+
+    <h2>2. Qué datos tratamos y con qué finalidad</h2>
+    <p>Tratamos los datos que nos facilitas voluntariamente, principalmente:</p>
+    <ul>
+      <li>
+        <strong>Datos de contacto</strong> (nombre, correo, teléfono y mensaje)
+        cuando escribes o rellenas un formulario, con la finalidad de atender
+        tu solicitud y, en su caso, elaborar una propuesta.
+      </li>
+      <li>
+        <strong>Datos de navegación</strong> mediante cookies, según se detalla
+        en la <a href="/cookies">Política de cookies</a>.
+      </li>
+    </ul>
+
+    <h2>3. Base jurídica</h2>
+    <p>
+      La base es tu <strong>consentimiento</strong> al contactarnos y el
+      <strong>interés legítimo</strong> en responder a tu solicitud y gestionar
+      la relación comercial. Para cookies no esenciales, la base es el
+      consentimiento.
+    </p>
+
+    <h2>4. Conservación</h2>
+    <p>
+      Conservamos tus datos mientras dure la relación y, después, durante los
+      plazos legalmente exigibles. Cuando dejen de ser necesarios, se suprimen
+      de forma segura.
+    </p>
+
+    <h2>5. Destinatarios</h2>
+    <p>
+      No cedemos tus datos a terceros salvo obligación legal. Podemos apoyarnos
+      en proveedores tecnológicos (por ejemplo, correo, alojamiento o analítica)
+      que actúan como encargados del tratamiento con las debidas garantías:
+      <span class="dato">[enumera aquí los servicios que uses]</span>.
+    </p>
+
+    <h2>6. Tus derechos</h2>
+    <p>
+      Puedes ejercer los derechos de acceso, rectificación, supresión,
+      oposición, limitación y portabilidad escribiendo a
+      <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a>.
+      También puedes reclamar ante la Agencia Española de Protección de Datos
+      (<a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a>)
+      si consideras que no hemos atendido correctamente tu solicitud.
+    </p>
+  </section>
+</Layout>

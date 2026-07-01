@@ -104,16 +104,10 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   background-color: var(--night);
-  /* Degradado de marca que cubre TODA la página, con zonas claramente
-     iluminadas a distintas alturas (Deep Blue, Purple Heart, Melrose). */
+  /* Base lineal. Los brillos de color van en la capa .fondo-lava,
+     que se mueve lento (lámpara de lava). */
   background-image:
-    radial-gradient(1000px 720px at 82% 0%,   rgba(65, 46, 206, 0.45), transparent 58%),
-    radial-gradient(950px  740px at 3% 11%,    rgba(41, 8, 128, 0.60),  transparent 55%),
-    radial-gradient(840px  660px at 96% 33%,   rgba(154, 145, 255, 0.24), transparent 55%),
-    radial-gradient(1080px 800px at 10% 55%,   rgba(65, 46, 206, 0.42), transparent 55%),
-    radial-gradient(920px  720px at 88% 76%,   rgba(41, 8, 128, 0.52),  transparent 55%),
-    radial-gradient(800px  640px at 26% 95%,   rgba(154, 145, 255, 0.20), transparent 55%),
-    linear-gradient(180deg, #070121 0%, #130742 25%, #0a0228 48%, #170b4a 72%, #090227 100%);
+    linear-gradient(180deg, #070121 0%, #100636 30%, #0a0228 55%, #140934 80%, #090227 100%);
 }
 
 img, svg { display: block; max-width: 100%; }
@@ -129,7 +123,7 @@ h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 600;
   line-height: 1.06;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   color: var(--white);
 }
 
@@ -879,9 +873,9 @@ section {
   font-weight: 300;
   font-size: clamp(1.5rem, 3vw, 2.5rem);
   line-height: 1.24;
-  letter-spacing: -0.01em;
+  letter-spacing: 0;
   color: var(--white);
-  max-width: 34ch;
+  max-width: 22ch;
 }
 .manifiesto-apoyo {
   font-size: clamp(1rem, 1.4vw, 1.15rem);
@@ -1389,4 +1383,267 @@ section {
 @media (max-width: 560px) {
   .cookies-acciones { width: 100%; }
   .cookies-acciones .boton { flex: 1; }
+}
+
+
+/* === 22. FONDO: LÁMPARA DE LAVA + RUIDO ====================
+   Manchas de color que se desplazan lento (solo transform: GPU,
+   sin filtros pesados) + una capa de ruido sutil sobre todo. */
+
+.fondo-lava {
+  position: fixed;
+  inset: 0;
+  z-index: -2;            /* detrás del ruido y del contenido */
+  overflow: hidden;
+  pointer-events: none;
+}
+.fondo-lava .blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.55;
+  will-change: transform;
+}
+.blob-1 {
+  width: 60vw; height: 60vw; left: -12vw; top: -12vh;
+  background: radial-gradient(circle, rgba(65, 46, 206, 0.55), transparent 70%);
+  animation: lava1 14s ease-in-out infinite alternate;
+}
+.blob-2 {
+  width: 55vw; height: 55vw; right: -14vw; top: 28vh;
+  background: radial-gradient(circle, rgba(41, 8, 128, 0.65), transparent 70%);
+  animation: lava2 17s ease-in-out infinite alternate;
+}
+.blob-3 {
+  width: 48vw; height: 48vw; left: 18vw; bottom: -18vh;
+  background: radial-gradient(circle, rgba(154, 145, 255, 0.30), transparent 70%);
+  animation: lava3 15s ease-in-out infinite alternate;
+}
+@keyframes lava1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(22vw, 26vh) scale(1.2); }
+}
+@keyframes lava2 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-20vw, -12vh) scale(1.15); }
+}
+@keyframes lava3 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(14vw, -22vh) scale(1.1); }
+}
+
+/* Ruido sutil sobre todo el fondo (imperceptible tras las estrellas) */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.13;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Sin movimiento para quien lo pide */
+@media (prefers-reduced-motion: reduce) {
+  .fondo-lava .blob { animation: none; }
+}
+
+
+/* === 23. ANIMACIONES DE TEXTO + CURSOR + IMÁGENES ==========*/
+
+/* Hero: las palabras del título suben una a una */
+.hero-titulo .palabra {
+  display: inline-block;
+  animation: subirPalabra 0.85s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes subirPalabra {
+  from { opacity: 0; transform: translateY(0.5em); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* Subtítulo y botones entran después */
+.hero-sub, .hero-botones {
+  animation: heroEntra 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.hero-sub { animation-delay: 0.62s; }
+.hero-botones { animation-delay: 0.74s; }
+@keyframes heroEntra {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Brillo sutil que recorre los títulos con degradé */
+.texto-degradado {
+  background: linear-gradient(115deg, #ffffff 0%, #ffffff 32%, #b3a9ff 50%, #ffffff 68%, #ffffff 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: brilloTexto 7s ease-in-out infinite alternate;
+}
+@keyframes brilloTexto {
+  from { background-position: 0% center; }
+  to   { background-position: 100% center; }
+}
+
+/* Cursor personalizado en todo el sitio (pointer.cur va en /public) */
+html { cursor: url('/pointer.cur'), auto; }
+a, button, .boton, summary, label, [role="button"] { cursor: url('/pointer.cur'), pointer; }
+
+/* Iconos SVG que se "dibujan" al entrar en pantalla.
+   Solo con JS (.js) y respetando reduce-motion. */
+.js .dif-icono svg > *,
+.js .servicio-icono svg > * {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+  transition: stroke-dashoffset 1.2s cubic-bezier(0.6, 0.05, 0.2, 1);
+}
+.js .dif-icono svg > *:nth-child(2),
+.js .servicio-icono svg > *:nth-child(2) { transition-delay: 0.16s; }
+.js .dif-icono svg > *:nth-child(3),
+.js .servicio-icono svg > *:nth-child(3) { transition-delay: 0.32s; }
+.js .dif-icono svg > *:nth-child(4),
+.js .servicio-icono svg > *:nth-child(4) { transition-delay: 0.48s; }
+.js .dif-icono.dibujado svg > *,
+.js .servicio-icono.dibujado svg > * {
+  stroke-dashoffset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .dif-icono svg > *,
+  .js .servicio-icono svg > * {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+/* Tooltip sobre la estrella Atria */
+.atria-tip {
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 90;
+  transform: translate(-50%, calc(-100% - 20px));
+  width: max-content;
+  max-width: 250px;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  background: linear-gradient(160deg, rgba(41, 8, 128, 0.92), rgba(7, 1, 33, 0.94));
+  border: 1px solid rgba(154, 145, 255, 0.4);
+  box-shadow: 0 18px 50px rgba(7, 1, 33, 0.6), 0 0 26px rgba(65, 46, 206, 0.35);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: #e9e6ff;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.42;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  will-change: opacity;
+}
+.atria-tip.visible { opacity: 1; }
+.atria-tip strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  margin-bottom: 0.22rem;
+  background: linear-gradient(115deg, #ffffff, #9a91ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.atria-tip::after {
+  content: '';
+  position: absolute;
+  left: 50%; bottom: -6px;
+  width: 12px; height: 12px;
+  transform: translateX(-50%) rotate(45deg);
+  background: rgba(7, 1, 33, 0.94);
+  border-right: 1px solid rgba(154, 145, 255, 0.4);
+  border-bottom: 1px solid rgba(154, 145, 255, 0.4);
+}
+
+/* ---- Páginas legales (aviso legal, privacidad, cookies, accesibilidad) ---- */
+.legal {
+  max-width: 760px;
+  padding-top: 1rem;
+  padding-bottom: clamp(3rem, 8vw, 5rem);
+}
+.legal h2 {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  margin: 2.4rem 0 0.7rem;
+}
+.legal h3 {
+  font-size: 1.05rem;
+  margin: 1.6rem 0 0.5rem;
+  color: var(--melrose);
+}
+.legal p,
+.legal li {
+  color: var(--text-soft);
+  line-height: 1.65;
+  font-size: 1rem;
+}
+.legal p { margin-bottom: 1rem; }
+.legal ul { margin: 0 0 1rem 1.1rem; }
+.legal li { margin-bottom: 0.45rem; }
+.legal a { color: var(--melrose); text-decoration: underline; }
+.legal strong { color: var(--white); font-weight: 500; }
+.legal-fecha {
+  font-size: 0.85rem;
+  color: rgba(154, 145, 255, 0.7);
+  margin-bottom: 1.5rem;
+}
+/* Hueco pendiente de completar: resalta lo que hay que rellenar */
+.dato {
+  color: #ffd7a6;
+  background: rgba(255, 180, 90, 0.1);
+  border-bottom: 1px dashed rgba(255, 180, 90, 0.5);
+  padding: 0 0.2em;
+  font-style: normal;
+}
+/* Aviso de plantilla */
+.legal-nota {
+  margin: 0 auto 2rem;
+  max-width: 760px;
+  padding: 1rem 1.2rem;
+  border-radius: 14px;
+  background: rgba(255, 180, 90, 0.09);
+  border: 1px solid rgba(255, 180, 90, 0.35);
+  color: #ffdcb0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.legal-nota strong { color: #ffe9cf; }
+/* Botón de preferencias de cookies */
+.cookie-reset {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 999px;
+  border: 1px solid rgba(154, 145, 255, 0.5);
+  background: transparent;
+  color: var(--white);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+.cookie-reset:hover {
+  background: rgba(65, 46, 206, 0.25);
+  border-color: var(--melrose);
+}
+
+/* Soporte para imágenes reales en la galería de proyectos */
+.proyecto-marca img {
+  max-height: 48px;
+  width: auto;
+  filter: brightness(0) invert(1);   /* logo en blanco */
+}
+.proyecto-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .texto-degradado { animation: none; }
 }

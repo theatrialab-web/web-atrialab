@@ -1,0 +1,89 @@
+---
+// ============================================
+// PÁGINA — AVISO LEGAL (LSSI-CE, España)
+// PLANTILLA: rellena los datos entre <span class="dato"> y
+// revísala con un profesional antes de publicar.
+// ============================================
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = "Aviso legal";
+const pageDescription =
+  "Información legal e identificativa de Atria Lab conforme a la normativa española.";
+const actualizado = "julio de 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Legal</span>
+    <h1 class="texto-degradado">Aviso legal</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Plantilla pendiente de completar.</strong> Los datos resaltados
+    deben rellenarse con la información real del titular y conviene revisar
+    el texto con un profesional antes de publicarlo.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Última actualización: {actualizado}</p>
+
+    <h2>1. Datos identificativos</h2>
+    <p>
+      En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la
+      Información y de Comercio Electrónico (LSSI-CE), se facilitan los
+      siguientes datos del titular de este sitio web:
+    </p>
+    <ul>
+      <li>Titular: <span class="dato">[Nombre o razón social]</span></li>
+      <li>NIF/DNI: <span class="dato">[NIF o DNI]</span></li>
+      <li>Domicilio: <span class="dato">[Dirección o "actividad sin establecimiento físico"]</span></li>
+      <li>Correo electrónico: <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a></li>
+      <li>Sitio web: theatrialab.com</li>
+    </ul>
+
+    <h2>2. Objeto</h2>
+    <p>
+      Este sitio web tiene por objeto presentar los servicios de marketing,
+      contenido, publicidad y desarrollo web de Atria Lab, así como facilitar
+      el contacto con potenciales clientes.
+    </p>
+
+    <h2>3. Condiciones de uso</h2>
+    <p>
+      El acceso y uso de este sitio implica la aceptación de las presentes
+      condiciones. El usuario se compromete a hacer un uso adecuado de los
+      contenidos y a no emplearlos para actividades ilícitas o contrarias a la
+      buena fe.
+    </p>
+
+    <h2>4. Propiedad intelectual e industrial</h2>
+    <p>
+      Todos los contenidos del sitio (textos, imágenes, marca, logotipo, diseño
+      y código) son titularidad de <span class="dato">[Nombre o razón social]</span>
+      o se utilizan con autorización, y están protegidos por la normativa de
+      propiedad intelectual e industrial. Queda prohibida su reproducción sin
+      autorización expresa.
+    </p>
+
+    <h2>5. Responsabilidad</h2>
+    <p>
+      El titular no se responsabiliza de los daños derivados del uso del sitio
+      ni de la indisponibilidad temporal del mismo por causas técnicas. Los
+      enlaces a sitios de terceros se ofrecen a título informativo, sin control
+      sobre su contenido.
+    </p>
+
+    <h2>6. Legislación aplicable</h2>
+    <p>
+      Estas condiciones se rigen por la legislación española. Para la
+      resolución de conflictos las partes se someten a los juzgados y
+      tribunales del domicilio del titular, salvo que la normativa de consumo
+      disponga otro fuero.
+    </p>
+
+    <p style="margin-top:2rem">
+      Consulta también nuestra <a href="/privacidad">Política de privacidad</a>
+      y la <a href="/cookies">Política de cookies</a>.
+    </p>
+  </section>
+</Layout>
