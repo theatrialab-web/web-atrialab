@@ -1,0 +1,85 @@
+---
+// ============================================
+// PAGE — PRIVACY POLICY (ENGLISH)
+// TEMPLATE: fill the highlighted fields and have it reviewed by a
+// professional before publishing.
+// ============================================
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = "Privacy policy";
+const pageDescription =
+  "How Atria Lab processes your personal data under the GDPR and Spanish data protection law.";
+const actualizado = "July 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Legal</span>
+    <h1 class="texto-degradado">Privacy policy</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Template pending completion.</strong> Adapt the controller,
+    purposes and retention periods to your real case. If you use forms,
+    analytics or external tools, they must be reflected here. Have it
+    reviewed by a professional before publishing.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Last updated: {actualizado}</p>
+
+    <h2>1. Data controller</h2>
+    <ul>
+      <li>Controller: <span class="dato">[Name or company name]</span></li>
+      <li>Tax ID: <span class="dato">[NIF or ID number]</span></li>
+      <li>Contact: <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a></li>
+    </ul>
+
+    <h2>2. What data we process and why</h2>
+    <p>We process the data you provide voluntarily, mainly:</p>
+    <ul>
+      <li>
+        <strong>Contact details</strong> (name, email, phone and message)
+        when you write to us or fill in a form, in order to handle your
+        request and, where applicable, prepare a proposal.
+      </li>
+      <li>
+        <strong>Browsing data</strong> through cookies, as detailed in our{" "}
+        <a href="/en/cookies">Cookie policy</a>.
+      </li>
+    </ul>
+
+    <h2>3. Legal basis</h2>
+    <p>
+      The basis is your <strong>consent</strong> when contacting us and our{" "}
+      <strong>legitimate interest</strong> in responding to your request and
+      managing the business relationship. For non-essential cookies, the
+      basis is consent.
+    </p>
+
+    <h2>4. Retention</h2>
+    <p>
+      We keep your data for as long as the relationship lasts and, afterwards,
+      for the legally required periods. When no longer needed, it is securely
+      deleted.
+    </p>
+
+    <h2>5. Recipients</h2>
+    <p>
+      We do not share your data with third parties except where legally
+      required. We may rely on technology providers (e.g. email, hosting or
+      analytics) acting as data processors with appropriate safeguards:
+      <span class="dato">[list the services you use here]</span>.
+    </p>
+
+    <h2>6. Your rights</h2>
+    <p>
+      You can exercise your rights of access, rectification, erasure,
+      objection, restriction and portability by writing to{" "}
+      <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a>.
+      You can also lodge a complaint with the Spanish Data Protection Agency
+      (<a href="https://www.aepd.es" target="_blank" rel="noopener">aepd.es</a>)
+      if you believe we have not handled your request correctly.
+    </p>
+  </section>
+</Layout>

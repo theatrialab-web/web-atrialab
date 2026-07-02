@@ -1,0 +1,130 @@
+---
+// ============================================
+// PAGE — ABOUT (ENGLISH)
+// Mirror of /nosotros.
+// ============================================
+
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = "Who we are: human strategy and AI";
+const pageDescription =
+  "We are Atria Lab, a small team pairing human judgment with artificial intelligence to grow brands. Learn how we think and work.";
+
+const valores = [
+  {
+    titulo: "We think before we produce",
+    texto:
+      "AI executes; we make the decisions. Nothing ships without human judgment behind it.",
+    icono: '<path d="M12 3 L13.7 9.2 L20 11 L13.7 12.8 L12 19 L10.3 12.8 L4 11 L10.3 9.2 Z" />',
+  },
+  {
+    titulo: "Truth for each brand",
+    texto:
+      "No formulas, no templates. Every business has its audience, its tone and its why — and that's where we work.",
+    icono: '<circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" />',
+  },
+  {
+    titulo: "Results, not smoke",
+    texto:
+      "We measure what matters: customers, sales, growth. If it doesn't move the business, it doesn't count.",
+    icono: '<line x1="5" y1="20" x2="5" y2="14" /><line x1="12" y1="20" x2="12" y2="9" /><line x1="19" y1="20" x2="19" y2="5" />',
+  },
+];
+
+// Team: 3 people, names only (no photos).
+// REPLACE the names with the real ones.
+const equipo = [
+  { nombre: "First Last", rol: "Strategy & direction" },
+  { nombre: "First Last", rol: "Content & production" },
+  { nombre: "First Last", rol: "Development & data" },
+];
+
+const schemaOrg = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Atria Lab",
+  url: "https://theatrialab.com",
+  description:
+    "Team combining human strategy and artificial intelligence to grow brands.",
+  areaServed: { "@type": "Country", name: "Spain" },
+  email: "theatrialab@gmail.com",
+  numberOfEmployees: 3,
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Header -->
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">About</span>
+    <h1 class="texto-degradado">We were born from an uncomfortable idea</h1>
+    <p class="pagina-lead">
+      That you can build real connection in an environment designed to
+      fragment attention. And that technology, used well, brings people
+      closer instead of pushing them away.
+    </p>
+  </section>
+
+  <!-- Philosophy / narrative -->
+  <section class="nosotros-narrativa">
+    <p class="narrativa-lead">
+      We don't choose between what is thought and what is felt. We choose what is{" "}
+      <span class="texto-degradado">true for each brand</span>.
+    </p>
+    <p>
+      A person sets the strategy and the story; artificial intelligence brings
+      the speed and the scale. That combination is what lets us produce more,
+      and faster, without losing judgment.
+    </p>
+    <p>
+      We are a young agency with a clear way of working: no smoke, no templates.
+      We listen to your business, design a tailored plan and measure every step.
+      What we learned winning customers for real brands is what we apply today,
+      now powered by AI.
+    </p>
+  </section>
+
+  <!-- Values -->
+  <section class="nosotros-valores">
+    <h2 class="texto-degradado">What we believe in</h2>
+    <div class="diferenciadores">
+      {valores.map((v) => (
+        <div class="diferenciador">
+          <span class="dif-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={v.icono} />
+          </span>
+          <h3>{v.titulo}</h3>
+          <p>{v.texto}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="nosotros-equipo">
+    <h2 class="texto-degradado">We are a small team</h2>
+    <p class="equipo-intro">
+      Three people focused on making your brand truly grow. No layers, no
+      middlemen: you talk to the people doing the work.
+    </p>
+    <div class="equipo-grid">
+      {equipo.map((m) => (
+        <div class="miembro">
+          <span class="miembro-nombre">{m.nombre}</span>
+          <span class="miembro-rol">{m.rol}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="cta-final">
+    <div class="cta-panel">
+      <h2 class="texto-degradado">Shall we work together?</h2>
+      <p>Tell us where you want to go. We'll tell you how, no strings attached.</p>
+      <a href="/en/contact" class="boton boton-primario">Let's talk</a>
+    </div>
+  </section>
+
+  <!-- Structured data for SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaOrg)} />
+</Layout>

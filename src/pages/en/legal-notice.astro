@@ -1,0 +1,87 @@
+---
+// ============================================
+// PAGE — LEGAL NOTICE (ENGLISH)
+// TEMPLATE: fill the highlighted <span class="dato"> fields and
+// have it reviewed by a professional before publishing.
+// ============================================
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = "Legal notice";
+const pageDescription =
+  "Legal and identifying information for Atria Lab under Spanish law.";
+const actualizado = "July 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Legal</span>
+    <h1 class="texto-degradado">Legal notice</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Template pending completion.</strong> The highlighted fields must
+    be filled in with the owner's real information, and the text should be
+    reviewed by a professional before publishing.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Last updated: {actualizado}</p>
+
+    <h2>1. Identifying information</h2>
+    <p>
+      In compliance with Spanish Law 34/2002 on Information Society Services
+      and Electronic Commerce (LSSI-CE), the following details of the owner
+      of this website are provided:
+    </p>
+    <ul>
+      <li>Owner: <span class="dato">[Name or company name]</span></li>
+      <li>Tax ID: <span class="dato">[NIF or ID number]</span></li>
+      <li>Address: <span class="dato">[Address or "activity without physical premises"]</span></li>
+      <li>Email: <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a></li>
+      <li>Website: theatrialab.com</li>
+    </ul>
+
+    <h2>2. Purpose</h2>
+    <p>
+      This website presents Atria Lab's marketing, content, advertising and
+      web development services, and makes it easy for potential clients to
+      get in touch.
+    </p>
+
+    <h2>3. Terms of use</h2>
+    <p>
+      Accessing and using this site implies acceptance of these terms. The
+      user agrees to make appropriate use of the contents and not to employ
+      them for unlawful activities or activities contrary to good faith.
+    </p>
+
+    <h2>4. Intellectual and industrial property</h2>
+    <p>
+      All contents of this site (texts, images, brand, logo, design and code)
+      are owned by <span class="dato">[Name or company name]</span>{" "}
+      or used with authorization, and are protected by intellectual and
+      industrial property law. Reproduction without express authorization
+      is prohibited.
+    </p>
+
+    <h2>5. Liability</h2>
+    <p>
+      The owner is not liable for damages arising from the use of the site or
+      for its temporary unavailability due to technical causes. Links to
+      third-party sites are provided for information only, with no control
+      over their content.
+    </p>
+
+    <h2>6. Applicable law</h2>
+    <p>
+      These terms are governed by Spanish law. For the resolution of disputes,
+      the parties submit to the courts of the owner's domicile, unless
+      consumer regulations provide otherwise.
+    </p>
+
+    <p style="margin-top:2rem">
+      See also our <a href="/en/privacy">Privacy policy</a>{" "}
+      and our <a href="/en/cookies">Cookie policy</a>.
+    </p>
+  </section>
+</Layout>

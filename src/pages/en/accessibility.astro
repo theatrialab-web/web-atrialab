@@ -1,0 +1,50 @@
+---
+// ============================================
+// PAGE — ACCESSIBILITY (ENGLISH)
+// Orientative template; adjust it to the site's real compliance level.
+// ============================================
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = "Accessibility";
+const pageDescription =
+  "Atria Lab's commitment to an accessible website and how to report barriers.";
+const actualizado = "July 2026";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Commitment</span>
+    <h1 class="texto-degradado">Accessibility</h1>
+  </section>
+
+  <p class="legal-nota">
+    <strong>Orientative template.</strong> Adjust the compliance level to the
+    site's reality. This statement does not replace a formal audit.
+  </p>
+
+  <section class="legal">
+    <p class="legal-fecha">Last updated: {actualizado}</p>
+
+    <h2>Our commitment</h2>
+    <p>
+      We want this site to be usable by as many people as possible. We work
+      towards the <strong>WCAG 2.1</strong> guidelines in areas such as
+      contrast, keyboard navigation, alternative text and honoring the
+      system's <em>reduce motion</em> preference.
+    </p>
+
+    <h2>Measures in place</h2>
+    <ul>
+      <li>Animations are softened if your device requests reduced motion.</li>
+      <li>Decorative images are marked as such for screen readers.</li>
+      <li>Content is structured with headings and semantic markup.</li>
+    </ul>
+
+    <h2>Found a barrier?</h2>
+    <p>
+      If something is hard to use, tell us at{" "}
+      <a href="mailto:theatrialab@gmail.com">theatrialab@gmail.com</a> and
+      we'll review it as soon as possible.
+    </p>
+  </section>
+</Layout>

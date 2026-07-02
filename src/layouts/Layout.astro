@@ -12,6 +12,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import CookieBanner from '../components/CookieBanner.astro';
+import { idiomaDe, urlAlterna, normaliza } from '../i18n';
 
 // "Props" = datos que cada página le pasa a este layout.
 interface Props {
@@ -29,10 +30,16 @@ const {
 const SITE_NAME = "Atria Lab";
 const SITE_URL = "https://theatrialab.com";
 const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
+
+// Idioma según la URL (/en/... = inglés) y URL equivalente en el otro idioma
+const lang = idiomaDe(Astro.url.pathname);
+const rutaAlterna = urlAlterna(Astro.url.pathname);
+const urlEs = new URL(lang === 'es' ? normaliza(Astro.url.pathname) : rutaAlterna, SITE_URL).href;
+const urlEn = new URL(lang === 'en' ? normaliza(Astro.url.pathname) : rutaAlterna, SITE_URL).href;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -41,6 +48,11 @@ const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
     <title>{title} | {SITE_NAME}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={currentUrl} />
+
+    <!-- Versiones por idioma (Google entiende que son la misma página) -->
+    <link rel="alternate" hreflang="es" href={urlEs} />
+    <link rel="alternate" hreflang="en" href={urlEn} />
+    <link rel="alternate" hreflang="x-default" href={urlEs} />
 
     <!-- Precarga de fuentes: el texto aparece antes y sin parpadeo -->
     <link rel="preload" href="/fonts/Chillax-Variable.ttf" as="font" type="font/ttf" crossorigin />
@@ -53,7 +65,8 @@ const currentUrl = new URL(Astro.url.pathname, SITE_URL).href;
     <meta property="og:image" content={new URL(image, SITE_URL).href} />
     <meta property="og:url" content={currentUrl} />
     <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:locale" content="es_ES" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'es_ES'} />
+    <meta property="og:locale:alternate" content={lang === 'en' ? 'es_ES' : 'en_US'} />
 
     <!-- ===== AL COMPARTIR EN X (Twitter) ===== -->
     <meta name="twitter:card" content="summary_large_image" />

@@ -1,32 +1,69 @@
 ---
 // ============================================
 // HEADER — cápsula de navegación centrada
-// Una sola píldora de cristal (logo + enlaces + botón), centrada.
+// Una sola píldora de cristal (logo + enlaces + idioma + botón).
 // - Arriba: flota separada del borde.
 // - Al hacer scroll: sube, se ancla y se vuelve más sólida.
 // - En móvil: la píldora muestra logo + hamburguesa; los enlaces
 //   se abren a pantalla completa.
+// - El conmutador ES/EN lleva a la misma página en el otro idioma.
 // ============================================
 
-const rutaActual = Astro.url.pathname;
+import { idiomaDe, urlAlterna, normaliza } from '../i18n';
+
+const rutaActual = normaliza(Astro.url.pathname);
+const lang = idiomaDe(rutaActual);
+const alterna = urlAlterna(rutaActual);
+
+// Textos y destinos según idioma
+const t = lang === 'en'
+  ? {
+      inicio: 'Home',        rInicio: '/en/',
+      servicios: 'Services', rServicios: '/en/services',
+      nosotros: 'About',     rNosotros: '/en/about',
+      hablemos: "Let's talk", rHablemos: '/en/contact',
+      abrir: 'Open menu', cerrar: 'Close menu', logoAria: 'Atria Lab — home',
+      cambiar: 'Ver esta página en español',
+    }
+  : {
+      inicio: 'Inicio',      rInicio: '/',
+      servicios: 'Servicios', rServicios: '/servicios',
+      nosotros: 'Nosotros',  rNosotros: '/nosotros',
+      hablemos: 'Hablemos',  rHablemos: '/contacto',
+      abrir: 'Abrir menú', cerrar: 'Cerrar menú', logoAria: 'Atria Lab — inicio',
+      cambiar: 'View this page in English',
+    };
+
+const esActivo = (r: string) => rutaActual === normaliza(r) ? 'activo' : '';
 ---
 
 <header class="cabecera">
   <nav class="navegacion">
-    <a href="/" class="logo" aria-label="Atria Lab — inicio">
+    <a href={t.rInicio} class="logo" aria-label={t.logoAria}>
       <img src="/LOGO_CUADRADO.svg" alt="Atria Lab" />
     </a>
 
     <div class="menu" id="menu-principal">
-      <a href="/" class={rutaActual === "/" ? "activo" : ""}>Inicio</a>
-      <a href="/servicios" class={rutaActual === "/servicios" ? "activo" : ""}>Servicios</a>
-      <a href="/nosotros" class={rutaActual === "/nosotros" ? "activo" : ""}>Nosotros</a>
-      <a href="/contacto" class="boton boton-primario boton-menu">Hablemos</a>
+      <a href={t.rInicio} class={esActivo(t.rInicio)}>{t.inicio}</a>
+      <a href={t.rServicios} class={esActivo(t.rServicios)}>{t.servicios}</a>
+      <a href={t.rNosotros} class={esActivo(t.rNosotros)}>{t.nosotros}</a>
+
+      <!-- Conmutador de idioma: enlaza a la misma página en el otro idioma -->
+      <div class="idiomas" aria-label="Idioma / Language">
+        <a href={lang === 'es' ? rutaActual : alterna} class={lang === 'es' ? 'activo' : ''}
+           aria-current={lang === 'es' ? 'true' : undefined}>ES</a>
+        <a href={lang === 'en' ? rutaActual : alterna} class={lang === 'en' ? 'activo' : ''}
+           aria-current={lang === 'en' ? 'true' : undefined} title={t.cambiar}>EN</a>
+      </div>
+
+      <a href={t.rHablemos} class="boton boton-primario boton-menu">{t.hablemos}</a>
     </div>
 
     <button
       class="menu-toggle"
-      aria-label="Abrir menú"
+      aria-label={t.abrir}
+      data-abrir={t.abrir}
+      data-cerrar={t.cerrar}
       aria-expanded="false"
       aria-controls="menu-principal"
     >
@@ -41,11 +78,14 @@ const rutaActual = Astro.url.pathname;
   const menu = document.getElementById('menu-principal');
 
   if (toggle && menu) {
+    const abrirTxt = toggle.getAttribute('data-abrir') || 'Abrir menú';
+    const cerrarTxt = toggle.getAttribute('data-cerrar') || 'Cerrar menú';
+
     toggle.addEventListener('click', () => {
       const abierto = menu.classList.toggle('abierto');
       toggle.classList.toggle('activo', abierto);
       toggle.setAttribute('aria-expanded', abierto ? 'true' : 'false');
-      toggle.setAttribute('aria-label', abierto ? 'Cerrar menú' : 'Abrir menú');
+      toggle.setAttribute('aria-label', abierto ? cerrarTxt : abrirTxt);
     });
 
     menu.querySelectorAll('a').forEach((enlace) => {
@@ -53,7 +93,7 @@ const rutaActual = Astro.url.pathname;
         menu.classList.remove('abierto');
         toggle.classList.remove('activo');
         toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú');
+        toggle.setAttribute('aria-label', abrirTxt);
       });
     });
   }

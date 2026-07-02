@@ -1,0 +1,209 @@
+---
+// ============================================
+// PAGE — SERVICES (ENGLISH)
+// Mirror of /servicios with English slugs and anchors.
+// ============================================
+
+import Layout from '../../layouts/Layout.astro';
+
+const pageTitle = "AI marketing services";
+const pageDescription =
+  "Content, strategy, Meta and Google advertising and web development powered by artificial intelligence. We attract and convert customers for your business. Ask for a quote, no strings attached.";
+
+// Services (single source: used on the page and in structured data)
+const servicios = [
+  {
+    id: "ai-content",
+    titulo: "AI content",
+    intro:
+      "Video, image and creative pieces produced with artificial intelligence and polished by people. Big-agency volume, at the speed your business needs.",
+    incluye: [
+      "Reels and short video for social media",
+      "Images and creatives for campaigns",
+      "Scripts, copy and brand texts",
+      "Adaptation by format and channel",
+    ],
+    para: "businesses that need to publish consistently and with quality without building an in-house team.",
+  },
+  {
+    id: "strategy-storytelling",
+    titulo: "Strategy & storytelling",
+    intro:
+      "Before producing, we think. We define your brand's idea, message and why, so every piece has direction instead of being noise.",
+    incluye: [
+      "Positioning and key messages",
+      "Narrative line and brand voice",
+      "Goal-driven content plan",
+      "Customer acquisition funnel",
+    ],
+    para: "brands that publish a lot but without direction, or that are starting out and need a solid base.",
+  },
+  {
+    id: "paid-media",
+    titulo: "Paid media · Meta & Google Ads",
+    intro:
+      "Advertising campaigns on Meta and Google that reach the people who will actually buy from you, with continuous measurement and optimization so every euro performs.",
+    incluye: [
+      "Campaign structure and management",
+      "Segmentation and audiences that convert",
+      "Creatives designed for ads",
+      "Measurement, reports and continuous improvement",
+    ],
+    para: "businesses that want bookings, appointments or sales from profitable ad spend.",
+  },
+  {
+    id: "web-development",
+    titulo: "AI web development",
+    intro:
+      "Fast, search-optimized, custom-built websites. Like this one. Designed to rank on Google and turn visits into customers.",
+    incluye: [
+      "Custom design and development",
+      "Technical SEO and loading speed",
+      "Conversion-oriented copy",
+      "Analytics and measurement integration",
+    ],
+    para: "businesses that need a website that ranks and sells, not just looks good.",
+  },
+];
+
+// FAQ (visible + in structured data)
+const faqs = [
+  {
+    q: "Do you work with businesses in any industry?",
+    a: "Yes. We've worked with restaurants, academies, clinics, travel agencies and construction companies, among others. The method adapts to the business and its customer.",
+  },
+  {
+    q: "Does artificial intelligence replace human work?",
+    a: "No. AI gives us speed and scale; the strategy, judgment and story come from people. That combination is exactly what sets us apart.",
+  },
+  {
+    q: "How long until we see results?",
+    a: "It depends on the starting point and the goal. With content and paid acquisition we usually see signals within the first weeks and sustained growth within the first months.",
+  },
+  {
+    q: "How much does it cost to work with Atria Lab?",
+    a: "We prepare a tailored quote based on your goals and the scope of work. Write to us and we'll look at it together, no strings attached.",
+  },
+  {
+    q: "Where are you based and who do you work with?",
+    a: "We work remotely with brands across Spain and beyond. We coordinate by video call and email, with clear reports on what gets done.",
+  },
+];
+
+// ---- Structured data (SEO) ----
+const schemaNegocio = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Atria Lab",
+  url: "https://theatrialab.com/en/services",
+  description:
+    "AI-powered marketing agency: content, strategy, Meta and Google advertising and web development to win customers.",
+  areaServed: { "@type": "Country", name: "Spain" },
+  email: "theatrialab@gmail.com",
+  knowsAbout: [
+    "Content marketing",
+    "Meta Ads and Google Ads advertising",
+    "Brand strategy and storytelling",
+    "Web development and SEO",
+  ],
+  makesOffer: servicios.map((s) => ({
+    "@type": "Offer",
+    itemOffered: { "@type": "Service", name: s.titulo, description: s.intro },
+  })),
+};
+
+const schemaFaq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
+
+// Line icons per service (same visual language as the home)
+const iconos: Record<string, string> = {
+  "ai-content":
+    '<path d="M12 3 L13.7 9.2 L20 11 L13.7 12.8 L12 19 L10.3 12.8 L4 11 L10.3 9.2 Z" />',
+  "strategy-storytelling":
+    '<circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" />',
+  "paid-media":
+    '<line x1="5" y1="20" x2="5" y2="14" /><line x1="12" y1="20" x2="12" y2="9" /><line x1="19" y1="20" x2="19" y2="5" />',
+  "web-development":
+    '<polyline points="8 8, 4 12, 8 16" /><polyline points="16 8, 20 12, 16 16" />',
+};
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <!-- Page header -->
+  <section class="pagina-hero">
+    <span class="pagina-eyebrow">Services</span>
+    <h1 class="texto-degradado">AI-powered marketing services</h1>
+    <p class="pagina-lead">
+      We combine human strategy and AI to attract, convince and convert.
+      Content, campaigns and websites that grow real businesses.
+    </p>
+    <div class="pagina-acciones">
+      <a href="/en/contact" class="boton boton-primario">Get a quote</a>
+      <a href="/en/about" class="boton boton-secundario">Our method</a>
+    </div>
+  </section>
+
+  <!-- Service detail (short intro + detail) -->
+  <section class="servicios-detalle" aria-label="Service details">
+    {servicios.map((s) => (
+      <article class="servicio-bloque" id={s.id}>
+        <div class="servicio-cab">
+          <span class="servicio-icono" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={iconos[s.id]} />
+          </span>
+          <h2 class="texto-degradado">{s.titulo}</h2>
+          <p class="servicio-intro">{s.intro}</p>
+        </div>
+        <div class="servicio-detalle">
+          <div class="servicio-incluye">
+            <h3>What's included</h3>
+            <ul>
+              {s.incluye.map((i) => <li>{i}</li>)}
+            </ul>
+          </div>
+          <p class="servicio-para"><strong>Ideal for:</strong> {s.para}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- Proof (conversion booster) -->
+  <section class="servicios-prueba">
+    <p class="servicios-prueba-texto">
+      <span class="texto-degradado">From 6 to 12 enrollments a week.</span>{" "}
+      We doubled Academia Pispiretas' student acquisition with content, Meta Ads
+      and Google Business — around 50 sign-ups a month.
+    </p>
+  </section>
+
+  <!-- FAQ (with structured data) -->
+  <section class="faq" aria-label="Frequently asked questions">
+    <h2 class="texto-degradado">Frequently asked questions</h2>
+    {faqs.map((f) => (
+      <details class="faq-item">
+        <summary>{f.q}</summary>
+        <p>{f.a}</p>
+      </details>
+    ))}
+  </section>
+
+  <!-- Final CTA -->
+  <section class="cta-final">
+    <div class="cta-panel">
+      <h2 class="texto-degradado">Shall we start your project?</h2>
+      <p>Tell us your goal and we'll prepare a tailored quote, no strings attached.</p>
+      <a href="/en/contact" class="boton boton-primario">Get a quote</a>
+    </div>
+  </section>
+
+  <!-- Structured data for SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify(schemaNegocio)} />
+  <script type="application/ld+json" set:html={JSON.stringify(schemaFaq)} />
+</Layout>

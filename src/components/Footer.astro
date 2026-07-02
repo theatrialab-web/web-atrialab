@@ -2,19 +2,63 @@
 // ============================================
 // FOOTER — multicolumna, estilo agencia, con el lenguaje de marca.
 // Marca + redes · Servicios · Navegación · Contacto.
+// Bilingüe: los textos y enlaces cambian según la URL (/en/...).
 // ============================================
 
+import { idiomaDe } from '../i18n';
+
 const anio = new Date().getFullYear();
+const lang = idiomaDe(Astro.url.pathname);
+
+const t = lang === 'en'
+  ? {
+      logoAria: 'Atria Lab — home', rInicio: '/en/',
+      descriptor: 'Human strategy and artificial intelligence to grow brands.',
+      servicios: 'Services',
+      s1: 'AI content',              r1: '/en/services#ai-content',
+      s2: 'Strategy & storytelling', r2: '/en/services#strategy-storytelling',
+      s3: 'Paid media',              r3: '/en/services#paid-media',
+      s4: 'Web development',         r4: '/en/services#web-development',
+      verTodos: 'View all',          rServicios: '/en/services',
+      nav: 'Atria Lab',
+      inicio: 'Home', nosotros: 'About', rNosotros: '/en/about',
+      contacto: 'Contact', rContacto: '/en/contact',
+      empezamos: 'Ready to start?', hablemos: "Let's talk",
+      derechos: 'All rights reserved.',
+      legal: 'Legal notice',       rLegal: '/en/legal-notice',
+      privacidad: 'Privacy policy', rPrivacidad: '/en/privacy',
+      cookies: 'Cookie policy',     rCookies: '/en/cookies',
+      accesibilidad: 'Accessibility', rAccesibilidad: '/en/accessibility',
+    }
+  : {
+      logoAria: 'Atria Lab — inicio', rInicio: '/',
+      descriptor: 'Estrategia humana e inteligencia artificial para hacer crecer marcas en España.',
+      servicios: 'Servicios',
+      s1: 'Contenido con IA',           r1: '/servicios#contenido-con-ia',
+      s2: 'Estrategia y storytelling',  r2: '/servicios#estrategia-storytelling',
+      s3: 'Paid media',                 r3: '/servicios#paid-media',
+      s4: 'Desarrollo web',             r4: '/servicios#desarrollo-web',
+      verTodos: 'Ver todos',            rServicios: '/servicios',
+      nav: 'Atria Lab',
+      inicio: 'Inicio', nosotros: 'Nosotros', rNosotros: '/nosotros',
+      contacto: 'Contacto', rContacto: '/contacto',
+      empezamos: '¿Empezamos?', hablemos: 'Hablemos',
+      derechos: 'Todos los derechos reservados.',
+      legal: 'Aviso legal',              rLegal: '/aviso-legal',
+      privacidad: 'Política de privacidad', rPrivacidad: '/privacidad',
+      cookies: 'Política de cookies',       rCookies: '/cookies',
+      accesibilidad: 'Accesibilidad',       rAccesibilidad: '/accesibilidad',
+    };
 ---
 
 <footer class="pie">
   <div class="pie-top">
     <!-- Marca + redes -->
     <div class="pie-marca">
-      <a href="/" class="logo" aria-label="Atria Lab — inicio">
+      <a href={t.rInicio} class="logo" aria-label={t.logoAria}>
         <img src="/LOGO_HORIZONTAL.svg" alt="Atria Lab" />
       </a>
-      <p>Estrategia humana e inteligencia artificial para hacer crecer marcas en España.</p>
+      <p>{t.descriptor}</p>
       <div class="pie-redes">
         <!-- Reemplaza # por tus URLs reales -->
         <a href="#" class="pie-red" aria-label="Instagram" target="_blank" rel="noopener">
@@ -32,27 +76,27 @@ const anio = new Date().getFullYear();
       </div>
     </div>
 
-    <!-- Servicios (enlazan a las anclas reales de /servicios) -->
-    <nav class="pie-col" aria-label="Servicios">
-      <h3>Servicios</h3>
-      <a href="/servicios#contenido-con-ia">Contenido con IA</a>
-      <a href="/servicios#estrategia-storytelling">Estrategia y storytelling</a>
-      <a href="/servicios#paid-media">Paid media</a>
-      <a href="/servicios#desarrollo-web">Desarrollo web</a>
-      <a href="/servicios">Ver todos</a>
+    <!-- Servicios (enlazan a las anclas reales) -->
+    <nav class="pie-col" aria-label={t.servicios}>
+      <h3>{t.servicios}</h3>
+      <a href={t.r1}>{t.s1}</a>
+      <a href={t.r2}>{t.s2}</a>
+      <a href={t.r3}>{t.s3}</a>
+      <a href={t.r4}>{t.s4}</a>
+      <a href={t.rServicios}>{t.verTodos}</a>
     </nav>
 
     <!-- Navegación -->
-    <nav class="pie-col" aria-label="Navegación">
-      <h3>Atria Lab</h3>
-      <a href="/">Inicio</a>
-      <a href="/nosotros">Nosotros</a>
-      <a href="/contacto">Contacto</a>
+    <nav class="pie-col" aria-label={t.nav}>
+      <h3>{t.nav}</h3>
+      <a href={t.rInicio}>{t.inicio}</a>
+      <a href={t.rNosotros}>{t.nosotros}</a>
+      <a href={t.rContacto}>{t.contacto}</a>
     </nav>
 
     <!-- Contacto -->
     <div class="pie-col pie-empezar">
-      <h3>¿Empezamos?</h3>
+      <h3>{t.empezamos}</h3>
       <a href="mailto:theatrialab@gmail.com" class="pie-contacto-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
           <rect x="3" y="5" width="18" height="14" rx="2" />
@@ -60,17 +104,17 @@ const anio = new Date().getFullYear();
         </svg>
         theatrialab@gmail.com
       </a>
-      <a href="/contacto" class="boton boton-primario pie-cta">Hablemos</a>
+      <a href={t.rContacto} class="boton boton-primario pie-cta">{t.hablemos}</a>
     </div>
   </div>
 
   <div class="pie-legal">
-    <span>© {anio} Atria Lab. Todos los derechos reservados.</span>
+    <span>© {anio} Atria Lab. {t.derechos}</span>
     <ul>
-      <li><a href="/aviso-legal">Aviso legal</a></li>
-      <li><a href="/privacidad">Política de privacidad</a></li>
-      <li><a href="/cookies">Política de cookies</a></li>
-      <li><a href="/accesibilidad">Accesibilidad</a></li>
+      <li><a href={t.rLegal}>{t.legal}</a></li>
+      <li><a href={t.rPrivacidad}>{t.privacidad}</a></li>
+      <li><a href={t.rCookies}>{t.cookies}</a></li>
+      <li><a href={t.rAccesibilidad}>{t.accesibilidad}</a></li>
     </ul>
   </div>
 </footer>

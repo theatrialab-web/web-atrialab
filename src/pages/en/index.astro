@@ -1,0 +1,300 @@
+---
+// ============================================
+// HOME PAGE — ENGLISH VERSION
+// URL: /en/
+// Mirror of the Spanish home. If you change copy in one language,
+// remember to update the other.
+// ============================================
+
+import Layout from '../../layouts/Layout.astro';
+import EstrellasHero from '../../components/EstrellasHero.astro';
+
+const pageTitle = "AI-powered marketing agency";
+const pageDescription = "We combine human strategy and artificial intelligence to create content, campaigns and websites that grow businesses. Faster, without losing judgment.";
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 1 — HERO                                       -->
+  <!-- ====================================================== -->
+  <section class="hero">
+    <EstrellasHero />
+
+    <div class="hero-coordenadas" aria-hidden="true">
+      <span class="coord-nombre">Atria · α Trianguli Australis</span>
+      <span>RA 16h 48m 39.9s</span>
+      <span>DEC −69° 01′ 39.5″</span>
+    </div>
+
+    <div class="hero-scrim" aria-hidden="true"></div>
+
+    <div class="hero-contenido">
+      <h1 class="hero-titulo">
+        <span class="palabra" style="animation-delay: 0.10s">We</span>{" "}
+        <span class="palabra" style="animation-delay: 0.18s">combine</span>{" "}
+        <span class="palabra" style="animation-delay: 0.26s">human</span>{" "}
+        <span class="palabra" style="animation-delay: 0.34s">strategy</span>{" "}
+        <span class="palabra" style="animation-delay: 0.42s">and</span>{" "}
+        <span class="palabra" style="animation-delay: 0.50s">artificial</span>{" "}
+        <span class="palabra" style="animation-delay: 0.58s">intelligence</span>
+      </h1>
+      <p class="hero-sub">
+        We pair human creativity with the power of artificial intelligence
+        to create content, campaigns and experiences that move businesses.
+        Faster, without losing judgment.
+      </p>
+      <div class="hero-botones">
+        <a href="/en/contact" class="boton boton-primario">Let's talk</a>
+        <a href="/en/services" class="boton boton-secundario">View services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION — BRANDS (infinite loop ribbon)                -->
+  <!-- PLACEHOLDERS: swap each span for an <img> in BOTH      -->
+  <!-- groups so the loop stays seamless.                     -->
+  <!-- ====================================================== -->
+  <section class="marcas">
+    <p class="marcas-titulo">They trust us</p>
+    <div class="marcas-cinta">
+      <div class="marcas-track">
+        <div class="marcas-grupo">
+          <span class="marca">Restaurant</span>
+          <span class="marca">Beauty Academy</span>
+          <span class="marca">Chess Academy</span>
+          <span class="marca">Aesthetic Clinic</span>
+          <span class="marca">Travel Agency</span>
+          <span class="marca">Construction 01</span>
+          <span class="marca">Construction 02</span>
+        </div>
+        <div class="marcas-grupo" aria-hidden="true">
+          <span class="marca">Restaurant</span>
+          <span class="marca">Beauty Academy</span>
+          <span class="marca">Chess Academy</span>
+          <span class="marca">Aesthetic Clinic</span>
+          <span class="marca">Travel Agency</span>
+          <span class="marca">Construction 01</span>
+          <span class="marca">Construction 02</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 2 — DIFFERENTIATORS                            -->
+  <!-- ====================================================== -->
+  <section class="diferenciadores">
+    <div class="diferenciador">
+      <span class="dif-icono" aria-hidden="true">
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="8" />
+          <circle cx="20" cy="12" r="8" />
+        </svg>
+      </span>
+      <h2>Human + machine</h2>
+      <p>
+        A person sets the strategy and the story; artificial intelligence
+        brings the speed and the scale. The best of both worlds.
+      </p>
+    </div>
+    <div class="diferenciador">
+      <span class="dif-icono" aria-hidden="true">
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 5, 15 12, 6 19" />
+          <polyline points="16 5, 25 12, 16 19" />
+        </svg>
+      </span>
+      <h2>More, and faster</h2>
+      <p>
+        We produce video, image and content at a pace a traditional
+        agency can't match.
+      </p>
+    </div>
+    <div class="diferenciador">
+      <span class="dif-icono" aria-hidden="true">
+        <svg viewBox="0 0 32 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="4 18, 12 11, 17 15, 28 5" />
+          <polyline points="21 5, 28 5, 28 12" />
+        </svg>
+      </span>
+      <h2>Results, not smoke</h2>
+      <p>
+        AI is the tool, not the excuse. We measure what matters:
+        customers, sales, growth.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 3 — SERVICES (preview)                         -->
+  <!-- ====================================================== -->
+  <section class="servicios-preview">
+    <h2 class="texto-degradado">What we do</h2>
+    <div class="servicios-grid">
+      <a href="/en/services" class="servicio-tarjeta">
+        <h3>AI content</h3>
+        <p>Video, image and creative pieces generated and refined with artificial intelligence.</p>
+      </a>
+      <a href="/en/services" class="servicio-tarjeta">
+        <h3>Strategy & storytelling</h3>
+        <p>The human layer: the idea, the message and the why behind every piece.</p>
+      </a>
+      <a href="/en/services" class="servicio-tarjeta">
+        <h3>Paid media</h3>
+        <p>Meta and Google campaigns that reach the people who will actually buy from you.</p>
+      </a>
+      <a href="/en/services" class="servicio-tarjeta">
+        <h3>AI web development</h3>
+        <p>Fast, optimized, custom-built websites. Like this one.</p>
+      </a>
+    </div>
+    <a href="/en/services" class="boton boton-primario">Explore our services</a>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 4 — PROCESS                                    -->
+  <!-- ====================================================== -->
+  <section class="proceso">
+    <h2>How we work</h2>
+    <ol class="proceso-pasos">
+      <li>
+        <h3>01 · We listen</h3>
+        <p>We understand your business, your customer and where you want to go.</p>
+      </li>
+      <li>
+        <h3>02 · Strategy</h3>
+        <p>We design a tailored plan. No templates.</p>
+      </li>
+      <li>
+        <h3>03 · AI production</h3>
+        <p>We create at scale: video, image, copy and campaigns, refined with human judgment.</p>
+      </li>
+      <li>
+        <h3>04 · Results</h3>
+        <p>We measure what matters and adjust. Growth isn't luck, it's method.</p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 5 — SOCIAL PROOF + PROJECTS                    -->
+  <!-- ====================================================== -->
+  <section class="prueba-social">
+    <h2 class="texto-degradado">Real results</h2>
+
+    <div class="caso">
+      <div class="caso-cifra">
+        <span class="caso-num">6 → 12</span>
+        <span class="caso-num-label">enrollments / week</span>
+      </div>
+      <p class="caso-texto">
+        <strong>Academia Pispiretas (Medellín):</strong> we doubled their
+        student sign-ups with content, Meta Ads and Google Business — around
+        50 enrollments a month. Today we apply that method, powered by AI.
+      </p>
+    </div>
+
+    <div class="proyectos-grid">
+      <a href="/en/services" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2025</span>
+        <span class="proyecto-marca">Beauty Academy</span>
+        <span class="proyecto-cat">Content · Meta Ads</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+      <a href="/en/services" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2025</span>
+        <span class="proyecto-marca">Restaurant</span>
+        <span class="proyecto-cat">Brand · Social</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+      <a href="/en/services" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2026</span>
+        <span class="proyecto-marca">Aesthetic Clinic</span>
+        <span class="proyecto-cat">Web · Paid media</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+      <a href="/en/services" class="proyecto" data-proyecto>
+        <span class="proyecto-ano">2025</span>
+        <span class="proyecto-marca">Construction</span>
+        <span class="proyecto-cat">Website</span>
+        <div class="proyecto-imagen" aria-hidden="true"></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 6 — MANIFESTO (teaser)                         -->
+  <!-- ====================================================== -->
+  <section class="manifiesto-teaser">
+    <span class="manifiesto-eyebrow">Who we are</span>
+    <p class="manifiesto-lead">
+      We were born from an uncomfortable idea: you can build{" "}
+      <span class="texto-degradado">real connection</span> in an environment
+      designed to fragment attention.
+    </p>
+    <p class="manifiesto-apoyo">
+      We don't choose between what is thought and what is felt.
+      We choose what is true for each brand.
+    </p>
+    <a href="/en/about" class="boton boton-secundario">Our story</a>
+  </section>
+
+  <!-- ====================================================== -->
+  <!-- SECTION 7 — FINAL CTA                                  -->
+  <!-- ====================================================== -->
+  <section class="cta-final">
+    <div class="cta-panel">
+      <h2 class="texto-degradado">Shall we talk about your business?</h2>
+      <p>Tell us where you want to go. We'll tell you how.</p>
+      <a href="/en/contact" class="boton boton-primario">Let's talk</a>
+    </div>
+  </section>
+
+  <!-- Custom cursor over the project gallery -->
+  <div class="cursor-ver" aria-hidden="true">View project <span>›</span></div>
+
+</Layout>
+
+<script>
+  // Cursor-following light on glass cards.
+  const tarjetas = document.querySelectorAll('.servicio-tarjeta, .caso');
+  tarjetas.forEach((el) => {
+    el.addEventListener('mousemove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    });
+  });
+
+  // Process reveal: nodes light up one by one, once.
+  const proceso = document.querySelector('.proceso');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (proceso && !reduce) {
+    proceso.classList.add('animable');
+    const io = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => {
+        if (e.isIntersecting) {
+          proceso.classList.add('visible');
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.35 });
+    io.observe(proceso);
+  }
+
+  // "View project" cursor pill (mouse only).
+  const cursorVer = document.querySelector('.cursor-ver');
+  const proyectos = document.querySelectorAll('[data-proyecto]');
+  if (cursorVer && proyectos.length && !('ontouchstart' in window)) {
+    proyectos.forEach((p) => {
+      p.addEventListener('mouseenter', () => cursorVer.classList.add('activo'));
+      p.addEventListener('mouseleave', () => cursorVer.classList.remove('activo'));
+      p.addEventListener('mousemove', (e) => {
+        cursorVer.style.left = `${e.clientX}px`;
+        cursorVer.style.top = `${e.clientY}px`;
+      });
+    });
+  }
+</script>

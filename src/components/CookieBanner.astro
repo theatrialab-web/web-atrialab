@@ -1,21 +1,74 @@
 ---
 // ============================================
 // BANNER DE COOKIES — obligatorio en España (RGPD / LSSI).
-// Informa, permite ACEPTAR o RECHAZAR con el mismo peso, y enlaza
-// a la política. No se carga NINGÚN script de analítica hasta que
-// la persona acepta (bloqueo previo por defecto).
+// Informa y permite ACEPTAR, RECHAZAR o CONFIGURAR (mismo peso
+// para aceptar/rechazar). No se carga NINGÚN script de analítica
+// hasta que la persona lo consiente (bloqueo previo por defecto).
+// El consentimiento se guarda granular: { necesarias, analiticas }.
+// Bilingüe según la URL (/en/...).
 // ============================================
+
+import { idiomaDe } from '../i18n';
+const lang = idiomaDe(Astro.url.pathname);
+
+const t = lang === 'en'
+  ? {
+      aria: 'Cookie notice',
+      rPolitica: '/en/cookies', politica: 'Cookie Policy',
+      rechazar: 'Reject', configurar: 'Configure', aceptar: 'Accept',
+      tecnicas: 'Technical',
+      tecnicasTxt: 'Required for the website to work. Always on.',
+      analiticas: 'Analytics',
+      analiticasTxt: 'Help us measure traffic anonymously. Optional.',
+      guardar: 'Save preferences',
+    }
+  : {
+      aria: 'Aviso de cookies',
+      rPolitica: '/cookies', politica: 'Política de cookies',
+      rechazar: 'Rechazar', configurar: 'Configurar', aceptar: 'Aceptar',
+      tecnicas: 'Técnicas',
+      tecnicasTxt: 'Necesarias para que la web funcione. No se pueden desactivar.',
+      analiticas: 'Analíticas',
+      analiticasTxt: 'Nos ayudan a medir el tráfico de forma anónima. Opcionales.',
+      guardar: 'Guardar preferencias',
+    };
 ---
 
-<div class="cookies" id="cookies-banner" role="dialog" aria-live="polite" aria-label="Aviso de cookies">
-  <p class="cookies-texto">
-    Usamos cookies propias y de terceros para mejorar tu experiencia y analizar el
-    tráfico. Puedes aceptarlas o rechazarlas. Más info en nuestra
-    <a href="/cookies">Política de cookies</a>.
-  </p>
+<div class="cookies" id="cookies-banner" role="dialog" aria-live="polite" aria-label={t.aria}>
+  {lang === 'en'
+    ? <p class="cookies-texto">We use our own and third-party cookies to improve your experience and analyze traffic. You can accept them, reject them or choose which ones. More info in our <a href={t.rPolitica}>{t.politica}</a>.</p>
+    : <p class="cookies-texto">Usamos cookies propias y de terceros para mejorar tu experiencia y analizar el tráfico. Puedes aceptarlas, rechazarlas o elegir cuáles. Más info en nuestra <a href={t.rPolitica}>{t.politica}</a>.</p>
+  }
+
   <div class="cookies-acciones">
-    <button type="button" class="boton boton-secundario" data-cookies="rechazar">Rechazar</button>
-    <button type="button" class="boton boton-primario" data-cookies="aceptar">Aceptar</button>
+    <button type="button" class="boton boton-secundario" data-cookies="rechazar">{t.rechazar}</button>
+    <button type="button" class="boton boton-secundario" data-cookies="configurar"
+            aria-expanded="false" aria-controls="cookies-config">{t.configurar}</button>
+    <button type="button" class="boton boton-primario" data-cookies="aceptar">{t.aceptar}</button>
+  </div>
+
+  <div class="cookies-config" id="cookies-config">
+    <div class="cookies-fila">
+      <div>
+        <strong>{t.tecnicas}</strong>
+        <span>{t.tecnicasTxt}</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" checked disabled />
+        <span class="switch-pista" aria-hidden="true"></span>
+      </label>
+    </div>
+    <div class="cookies-fila">
+      <div>
+        <strong>{t.analiticas}</strong>
+        <span>{t.analiticasTxt}</span>
+      </div>
+      <label class="switch">
+        <input type="checkbox" data-cookie-analiticas />
+        <span class="switch-pista" aria-hidden="true"></span>
+      </label>
+    </div>
+    <button type="button" class="boton boton-primario" data-cookies="guardar">{t.guardar}</button>
   </div>
 </div>
 
@@ -32,15 +85,33 @@
       requestAnimationFrame(() => banner.classList.add('visible'));
     }
 
+    const panel = banner.querySelector('#cookies-config');
+    const btnConfig = banner.querySelector('[data-cookies="configurar"]');
+    const chkAnaliticas = banner.querySelector('[data-cookie-analiticas]');
+
+    function guardar(analiticas) {
+      const valor = JSON.stringify({ necesarias: true, analiticas: !!analiticas });
+      try { localStorage.setItem(CLAVE, valor); } catch (e) {}
+      banner.classList.remove('visible');
+      if (analiticas) {
+        // AQUÍ se cargarían los scripts de analítica / píxeles
+        // (Google Analytics, Meta Pixel, etc.). Hasta consentir, nada.
+        window.dispatchEvent(new Event('cookies-aceptadas'));
+      }
+    }
+
     banner.querySelectorAll('[data-cookies]').forEach((boton) => {
       boton.addEventListener('click', () => {
-        const eleccion = boton.getAttribute('data-cookies');
-        try { localStorage.setItem(CLAVE, eleccion); } catch (e) {}
-        banner.classList.remove('visible');
-        if (eleccion === 'aceptar') {
-          // AQUÍ se cargarían los scripts de analítica / píxeles
-          // (Google Analytics, Meta Pixel, etc.). Hasta aceptar, nada.
-          window.dispatchEvent(new Event('cookies-aceptadas'));
+        const accion = boton.getAttribute('data-cookies');
+        if (accion === 'aceptar') {
+          guardar(true);
+        } else if (accion === 'rechazar') {
+          guardar(false);
+        } else if (accion === 'guardar') {
+          guardar(chkAnaliticas && chkAnaliticas.checked);
+        } else if (accion === 'configurar') {
+          const abierto = panel.classList.toggle('abierto');
+          btnConfig.setAttribute('aria-expanded', abierto ? 'true' : 'false');
         }
       });
     });

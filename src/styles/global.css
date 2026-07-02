@@ -286,8 +286,39 @@ section {
 .menu > a:not(.boton):hover::after,
 .menu > a.activo::after { transform: scaleX(1); }
 
-/* Botón Hablemos: píldora sin morado de base; al pasar el ratón el
-   color se rellena de DERECHA a IZQUIERDA. */
+/* Conmutador de idioma ES / EN: pastilla pequeña dentro de la cápsula */
+.idiomas {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.04);
+}
+.idiomas a {
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  transition: color 0.25s ease, background 0.25s ease;
+}
+.idiomas a:hover { color: var(--white); }
+.idiomas a.activo {
+  background: rgba(154, 145, 255, 0.18);
+  color: var(--white);
+}
+
+/* Botón Hablemos: píldora sin morado de base; al pasar el ratón,
+   un haz de luz recorre el borde (efecto tecnológico) y el interior
+   se ilumina suavemente desde los bordes. */
+@property --haz {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
 .boton-menu {
   position: relative;
   overflow: hidden;
@@ -300,32 +331,49 @@ section {
   border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow: none;
 }
+/* Anillo de luz: gradiente cónico recortado al grosor del borde */
 .boton-menu::before {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: -30%;
-  bottom: -2%;
-  z-index: -1;
-  background: var(--heart);
-  /* borde superior irregular: el frente de "pintura" que sube */
-  clip-path: polygon(
-    0 22%, 10% 10%, 22% 21%, 34% 8%, 47% 19%,
-    60% 7%, 72% 20%, 84% 9%, 100% 17%, 100% 100%, 0 100%
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;                 /* grosor del haz */
+  background: conic-gradient(
+    from var(--haz),
+    transparent 0deg 250deg,
+    rgba(154, 145, 255, 0.55) 300deg,
+    rgba(255, 255, 255, 0.95) 330deg,
+    rgba(154, 145, 255, 0.55) 344deg,
+    transparent 360deg
   );
-  transform: translateY(115%);   /* en reposo: oculta debajo */
-  transition: transform 0.55s cubic-bezier(0.45, 0, 0.2, 1);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+@keyframes hazBorde {
+  to { --haz: 360deg; }
 }
 .boton-menu:hover {
   background: transparent;
-  border-color: var(--heart);
-  color: #ffffff;            /* el texto se mantiene blanco sobre el morado */
+  border-color: rgba(154, 145, 255, 0.55);
+  color: #ffffff;
   transform: none;
-  box-shadow: none;
+  /* el interior se ilumina desde los bordes hacia dentro */
+  box-shadow:
+    inset 0 0 14px rgba(154, 145, 255, 0.35),
+    inset 0 0 3px rgba(154, 145, 255, 0.5),
+    0 0 16px rgba(65, 46, 206, 0.35);
 }
-/* al pasar el ratón, la pintura sube y llena el botón */
-.boton-menu:hover::before { transform: translateY(0); }
+.boton-menu:hover::before {
+  opacity: 1;
+  animation: hazBorde 2.2s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .boton-menu:hover::before { animation: none; opacity: 0.85; }
+}
 
 /* Botón hamburguesa: oculto en escritorio, visible en móvil */
 .menu-toggle {
@@ -648,7 +696,7 @@ section {
   border-radius: 50%;
   background: var(--melrose);
   box-shadow: 0 0 12px 2px rgba(154, 145, 255, 0.6);
-  transition: background 0.4s ease, box-shadow 0.4s ease;
+  transition: background 0.9s ease, box-shadow 0.9s ease;
 }
 .proceso-pasos li h3 {
   color: var(--melrose);
@@ -661,7 +709,7 @@ section {
 /* --- Revelado escalonado (lo activa el JS con .animable) --- */
 .proceso.animable .proceso-pasos li {
   opacity: 0.22;
-  transition: opacity 0.5s ease;
+  transition: opacity 1s ease;
 }
 .proceso.animable .proceso-pasos li::before {
   background: rgba(154, 145, 255, 0.3);
@@ -670,7 +718,7 @@ section {
 .proceso.animable .proceso-pasos::before {
   transform: scaleX(0);
   transform-origin: left center;
-  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 2.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 /* al entrar en pantalla: la línea se dibuja y se encienden los nodos */
 .proceso.animable.visible .proceso-pasos::before { transform: scaleX(1); }
@@ -681,13 +729,13 @@ section {
 }
 /* escalonado: uno tras otro */
 .proceso.animable.visible .proceso-pasos li:nth-child(1),
-.proceso.animable.visible .proceso-pasos li:nth-child(1)::before { transition-delay: 0.15s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(1)::before { transition-delay: 0.3s; }
 .proceso.animable.visible .proceso-pasos li:nth-child(2),
-.proceso.animable.visible .proceso-pasos li:nth-child(2)::before { transition-delay: 0.45s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(2)::before { transition-delay: 0.95s; }
 .proceso.animable.visible .proceso-pasos li:nth-child(3),
-.proceso.animable.visible .proceso-pasos li:nth-child(3)::before { transition-delay: 0.75s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(3)::before { transition-delay: 1.6s; }
 .proceso.animable.visible .proceso-pasos li:nth-child(4),
-.proceso.animable.visible .proceso-pasos li:nth-child(4)::before { transition-delay: 1.05s; }
+.proceso.animable.visible .proceso-pasos li:nth-child(4)::before { transition-delay: 2.25s; }
 
 
 /* === 12. PRUEBA SOCIAL + PROYECTOS =========================
@@ -1101,6 +1149,8 @@ section {
   .menu.abierto { transform: translateX(0); }
   .menu > a:not(.boton) { font-size: 1.6rem; color: var(--white); }
   .boton-menu { margin-left: 0; margin-top: 1rem; font-size: 1.1rem; }
+  .idiomas { margin-top: 0.6rem; }
+  .idiomas a { font-size: 0.95rem; padding: 0.4rem 0.9rem; }
 }
 
 
@@ -1378,12 +1428,68 @@ section {
   color: var(--text-soft);
 }
 .cookies-texto a { color: var(--melrose); text-decoration: underline; }
-.cookies-acciones { display: flex; gap: 0.7rem; }
+.cookies-acciones { display: flex; gap: 0.7rem; flex-wrap: wrap; }
 .cookies-acciones .boton { padding: 0.55rem 1.25rem; font-size: 0.9rem; }
 @media (max-width: 560px) {
   .cookies-acciones { width: 100%; }
   .cookies-acciones .boton { flex: 1; }
 }
+
+/* Panel de preferencias (se abre con "Configurar") */
+.cookies-config {
+  display: none;
+  flex-basis: 100%;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(154, 145, 255, 0.18);
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.cookies-config.abierto { display: flex; }
+.cookies-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.cookies-fila strong {
+  display: block;
+  color: var(--white);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+.cookies-fila span {
+  color: var(--text-soft);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+.cookies-config .boton {
+  align-self: flex-start;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.9rem;
+}
+/* Interruptor */
+.switch { position: relative; flex-shrink: 0; width: 42px; height: 24px; }
+.switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.switch-pista {
+  position: absolute; inset: 0;
+  border-radius: 999px;
+  background: rgba(154, 145, 255, 0.25);
+  transition: background 0.25s ease;
+}
+.switch-pista::after {
+  content: "";
+  position: absolute; top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s ease;
+}
+.switch input:checked + .switch-pista { background: var(--heart); }
+.switch input:checked + .switch-pista::after { transform: translateX(18px); }
+.switch input:disabled + .switch-pista { opacity: 0.55; }
+.switch input:disabled { cursor: default; }
 
 
 /* === 22. FONDO: LÁMPARA DE LAVA + RUIDO ====================
@@ -1494,14 +1600,14 @@ a, button, .boton, summary, label, [role="button"] { cursor: url('/pointer.cur')
 .js .servicio-icono svg > * {
   stroke-dasharray: 240;
   stroke-dashoffset: 240;
-  transition: stroke-dashoffset 1.2s cubic-bezier(0.6, 0.05, 0.2, 1);
+  transition: stroke-dashoffset 2.8s cubic-bezier(0.6, 0.05, 0.2, 1);
 }
 .js .dif-icono svg > *:nth-child(2),
-.js .servicio-icono svg > *:nth-child(2) { transition-delay: 0.16s; }
+.js .servicio-icono svg > *:nth-child(2) { transition-delay: 0.4s; }
 .js .dif-icono svg > *:nth-child(3),
-.js .servicio-icono svg > *:nth-child(3) { transition-delay: 0.32s; }
+.js .servicio-icono svg > *:nth-child(3) { transition-delay: 0.8s; }
 .js .dif-icono svg > *:nth-child(4),
-.js .servicio-icono svg > *:nth-child(4) { transition-delay: 0.48s; }
+.js .servicio-icono svg > *:nth-child(4) { transition-delay: 1.2s; }
 .js .dif-icono.dibujado svg > *,
 .js .servicio-icono.dibujado svg > * {
   stroke-dashoffset: 0;
@@ -1548,16 +1654,6 @@ a, button, .boton, summary, label, [role="button"] { cursor: url('/pointer.cur')
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-}
-.atria-tip::after {
-  content: '';
-  position: absolute;
-  left: 50%; bottom: -6px;
-  width: 12px; height: 12px;
-  transform: translateX(-50%) rotate(45deg);
-  background: rgba(7, 1, 33, 0.94);
-  border-right: 1px solid rgba(154, 145, 255, 0.4);
-  border-bottom: 1px solid rgba(154, 145, 255, 0.4);
 }
 
 /* ---- Páginas legales (aviso legal, privacidad, cookies, accesibilidad) ---- */
